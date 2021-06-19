@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <!---->
-    <link rel="stylesheet" href="startAdmin_style.css">
+    <link rel="stylesheet" href="entrys_style.css">
 
 
     <title>login</title>

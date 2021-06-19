@@ -1,5 +1,6 @@
 <?php
   function check($username,$password){
+    print_r($username);
     //test data
     //$username = 'user0';
     //$password = 'password0';
@@ -30,13 +31,13 @@
 
           //if username and password fit it returns true
           if($datensatz["Benutzername"] == $username && $datensatz["Passwort"] == $password){
+            //is admin or not?
             return true;
           }
 
         }
 
     }
-
     //disconnect from database
     $connection->close();
 
