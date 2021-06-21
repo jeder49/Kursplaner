@@ -7,7 +7,7 @@
   function checklogin(){
 
     //sql command
-    $sql = "SELECT UID,Benutzername,Passwort FROM user;";
+    $sql = "SELECT UID,username,password FROM user;";
 
     //creates connection to database
     $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -50,9 +50,9 @@
 
   function checkRights(){
     //looks if user is admin, teacher, student or students representitive
-    $sql1 = "SELECT cout(UID) FROM vertritt WHERE UID=$id;";
-    $sql2 = "SELECT cout(UID) FROM lehrer WHERE UID=$id;"
-    $sql3 = "SELECT cout(UID) FROM Admin WHERE UID=$id;"
+    $sql1 = "SELECT cout(UID) FROM class WHERE UID=$id;";
+    $sql2 = "SELECT cout(UID) FROM teacher WHERE UID=$id;";
+    $sql4 = "SELECT cout(UID) FROM admin WHERE UID=$id;";
 
     //gets the result of the DB for the sql comand
     $result1 = $connection->query($sql1);
@@ -79,7 +79,7 @@
       //
       header('Location: /StartStudent.php');
     }
-    $result1 = $connection->query($sql3);
+    $result1 = $connection->query($sql4);
     if( 0 != $result1){
 
       //cookie to save type of user
