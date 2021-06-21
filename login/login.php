@@ -1,9 +1,9 @@
 <?php
-  function check($username,$password){
-    print_r($username);
-    //test data
-    //$username = 'user0';
-    //$password = 'password0';
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  print_r($username);
+  print_r($password);
+  function checklogin(){
 
     //sql command
     $sql = "SELECT Benutzername, Passwort FROM user;";
@@ -43,5 +43,10 @@
 
     //retuns false because no user with this password exists
     return false;
+  }
+
+
+  function checkRights(){
+
   }
 ?>
