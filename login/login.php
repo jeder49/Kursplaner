@@ -1,4 +1,5 @@
 <?php
+  $id;
   $username = $_POST['username'];
   $password = $_POST['password'];
   print_r($username);
@@ -6,7 +7,7 @@
   function checklogin(){
 
     //sql command
-    $sql = "SELECT Benutzername, Passwort FROM user;";
+    $sql = "SELECT UID,Benutzername,Passwort FROM user;";
 
     //creates connection to database
     $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -32,7 +33,8 @@
           //if username and password fit it returns true
           if($datensatz["Benutzername"] == $username && $datensatz["Passwort"] == $password){
             //is admin or not?
-            return true;
+            $id = setcookie('id',$datensatz['UID']);
+            checkRights();
           }
 
         }
@@ -47,6 +49,47 @@
 
 
   function checkRights(){
+    //looks if user is admin, teacher, student or students representitive
+    $sql1 = "SELECT cout(UID) FROM vertritt WHERE UID=$id;";
+    $sql2 = "SELECT cout(UID) FROM lehrer WHERE UID=$id;"
+    $sql3 = "SELECT cout(UID) FROM Admin WHERE UID=$id;"
 
+    //gets the result of the DB for the sql comand
+    $result1 = $connection->query($sql1);
+    if( 0 != $result1){
+
+      //cookie to save type of user
+      setcookie('typ','student representetive');
+
+      //cookie.js
+      echo "<script>" . file_get_contents('./cookie.js') . "</script>";//'../admin'
+
+      //
+      header('Location: /StartStudent.php');
+    }
+    $result1 = $connection->query($sql2);
+    if( 0 != $result1){
+
+      //cookie to save type of user
+      setcookie('typ','teacher');
+
+      //cookie.js
+      echo "<script>" . file_get_contents('./cookie.js') . "</script>";//'../admin'
+
+      //
+      header('Location: /StartStudent.php');
+    }
+    $result1 = $connection->query($sql3);
+    if( 0 != $result1){
+
+      //cookie to save type of user
+      setcookie('typ','admin');
+
+      //cookie.js
+      echo "<script>" . file_get_contents('./cookie.js') . "</script>";//'../admin'
+
+      //
+      header('Location: /StartAdmin.php');
+    }
   }
 ?>

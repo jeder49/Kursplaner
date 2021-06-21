@@ -33,6 +33,7 @@ function doHashThing(){
 
     //todo: call php function and get result
 //------------------------------------------------------------------------------
+    /*
     jQuery.ajax({
       type: "POST",
       url: 'login.php',
@@ -42,6 +43,7 @@ function doHashThing(){
         alert(data);
       }
     });
-    //window.location.href = 'login.php';
+    */
+    window.location.href = 'login.php';
 //------------------------------------------------------------------------------
 }
