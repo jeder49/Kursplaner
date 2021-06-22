@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
 
     <!--
-    <link rel="stylesheet" href="startStudent_style.css">
+      <link rel="stylesheet" href="startStudent_style_dark.css">
+      <link rel="stylesheet" href="startStudent_style_white.css">
     -->
     <title>home</title>
   </head>

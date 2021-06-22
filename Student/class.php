@@ -3,10 +3,30 @@
     <!--definds -->
     <meta charset="UTF-8">
 
-    <!---->
-    <link rel="stylesheet" href="class_style.css">
+    <!--
+      <link rel="stylesheet" href="class_style_dark.css">
+      <link rel="stylesheet" href="class_style_white.css">
+    -->
+    <title>
+      <?php
+        //gets Id by former page
+        $id = $_GET["id"];
 
-    <title>home</title>
+        //get data about the class
+        $sql = "SELECT token,homework,TID,SID,subject FROM class WHERE KID=$id;";
+
+        //creates connection to database
+        $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+        //gets the result of the DB for the sql comand
+        $result = $connection->query($sql);
+
+        //
+        $datensatz = $result->fetch_assoc();
+
+        echo $datensatz['token'];
+      ?>
+    </title>
   </head>
   <body>
     <header>
@@ -15,21 +35,6 @@
 
           <!--makes contact to the DB and prints out subjectname-->
           <?php
-            //gets Id by former page
-            $id = $_GET["id"];
-
-            //get data about the class
-            $sql = "SELECT token,homework,TID,SID,subject FROM class WHERE KID=$id;";
-
-            //creates connection to database
-            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
-
-            //gets the result of the DB for the sql comand
-            $result = $connection->query($sql);
-
-            //
-            $datensatz = $result->fetch_assoc();
-
             echo $datensatz['subject'];
           ?>
         </h1>

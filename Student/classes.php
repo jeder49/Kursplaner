@@ -4,7 +4,8 @@
       <meta charset="UTF-8">
 
       <!--
-      <link rel="stylesheet" href="class_style.css">
+        <link rel="stylesheet" href="classes_style_dark.css">
+        <link rel="stylesheet" href="classes_style_white.css">
       -->
       <title>classes</title>
     </head>
