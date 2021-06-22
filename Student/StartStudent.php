@@ -62,7 +62,7 @@
           //echo "day: "+$day;
 
           //sql command: you get all classes of the user for one day ordered by the time it starts
-          $sql = "SELECT KID FROM takesPlace natural join appointment WHERE day= $day AND KID=(SELECT KID FROM take WHERE UID=$id) ORDER BY timeslot;";  //möglicher Anführungszeichen Fehler!
+          $sql = 'SELECT KID FROM takesPlace as tp natural join appointment as ap natural join (SELECT KID FROM take WHERE UID=2) as t WHERE day= 1 ORDER BY timeslot';//"SELECT KID FROM takesPlace natural join appointment WHERE day= $day AND KID=(SELECT KID FROM take WHERE UID=$id) ORDER BY timeslot;";
 
           //creates connection to database
           $connection = new mysqli('localhost', 'root', '', 'kursplaner');
@@ -96,7 +96,7 @@
                 //new datensatz
                 $datensatz1 = $result->fetch_assoc();
 
-                //Create new document with specified version number
+                //change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 $dom = new DOMDocument('1.0');
 
                 //Create new <tr> tag with subject name in it

@@ -10,17 +10,20 @@
   </head>
   <body>
     <header>
-      <button type="button" id="Menu"></button>
-      <button type="button" id="Mo"></button>
-      <button type="button" id="Di"></button>
-      <button type="button" id="Mi"></button>
-      <button type="button" id="Do"></button>
-      <button type="button" id="Fr"></button>
-      <button type="button" id=""></button>
+      <center>
+        <h1>
+          <?php
+            $name = $_GET["name"];
+            echo $name;
+          ?>
+        </h1>
+      </center>
     </header>
     <div>
       <table>
-
+        <?php
+          echo $name;
+        ?>
       </table>
     </div>
   </body>
