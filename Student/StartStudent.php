@@ -23,20 +23,20 @@
         include 'login.php';
       }
       */
-
-      $day = date("N");
     ?>
 
 
     <header>
-      <button type="button" id="Menu"></button>
-      <button type="button" id="Mon" onclick=<?php $day=1?>>Monday</button>
-      <button type="button" id="Tue" onclick=<?php $day=1?>>Tuesday</button>
-      <button type="button" id="Wed" onclick=<?php $day=1?>>Wednesday</button>
-      <button type="button" id="Thur" onclick=<?php $day=1?>>Thursday</button>
-      <button type="button" id="Fri" onclick=<?php $day=1?>>Friday</button>
-      <button type="button" id=""></button>
-
+      <center>
+        <form method="post">
+          <input type="submit" name="Menu" value="Menu"/>
+          <input type="submit" name="Mon" value="Monday"/>
+          <input type="submit" name="Tue" value="Tuesday"/>
+          <input type="submit" name="Wed" value="Wednesday"/>
+          <input type="submit" name="Thur" value="Thursday"/>
+          <input type="submit" name="Fri" value="Friday"/>
+        </form>
+      </center>
       <!--gets the default date and the input of the button-->
       <script>
       //if('day'==null){
@@ -57,55 +57,93 @@
     </header>
 
     <div>
-      <table>
-        <?php
-          //userid
-          $id = 2;//$_COOKIE['id'];
-
-          //sql command: you get all classes of the user for one day ordered by the time it starts
-          $sql = 'SELECT KID FROM takesPlace as tp natural join appointment as ap natural join (SELECT KID FROM take WHERE UID=2) as t WHERE day= 1 ORDER BY timeslot';//"SELECT KID FROM takesPlace natural join appointment WHERE day= $day AND KID=(SELECT KID FROM take WHERE UID=$id) ORDER BY timeslot;";
-
-          //creates connection to database
-          $connection = new mysqli('localhost', 'root', '', 'kursplaner');
-
-          //gets the result of the DB for the sql comand
-          $result = $connection->query($sql);
-
-          //if there is no data in the database for that day or the cookie for the day does not exists
-          if(null == isset($_COOKIE['day']) || $result==false){
-            echo 'Sorry, there is a problem and I am too lazy to program some thing!';
-          } else {
-
-            if (!$result) {
-				          exit("Fehler: <br/>".$connection->error);
-            }else{
-
-              for($i=0;$i<7;$i++){
-                //get Id of the class
-                $kid = $datensatz['KID'];
-
-                //new sql comand to get the subject and kürzel of the termin
-                $sql1 = "SELECT subject, token FROM class WHERE KID=$kid;";
-
-                //new result
-                $result1 = $connection->query($sql1);
-
-                //new datensatz
-                $datensatz1 = $result->fetch_assoc();
-
-                //if there is no subject for one timeslot
-                //if($i==1 and ){
-
-                //}
-                  //Create new <tr> tag with subject name in it
-                  echo '<tr id="'.$i.'"><th>'.$datensatz1['subject'].'</br>'.$datensatz1['token'].'</th></tr>';
-
-              }
+      <center>
+        <table>
+          <?php
+            load(date("N"));
+            if(array_key_exists('Menu', $_POST)) {
+              button1();
             }
-            $connection->close();
-          }
-        ?>
-      </table>
+            if(array_key_exists('Mon', $_POST)) {
+              button2();
+            }
+            if(array_key_exists('Tue', $_POST)) {
+              button3();
+            }
+            if(array_key_exists('Wed', $_POST)) {
+              button4();
+            }
+            if(array_key_exists('Thur', $_POST)) {
+              button5();
+            }
+            if(array_key_exists('Fri', $_POST)) {
+              button6();
+            }
+
+            function button1() {
+              load(1);
+            }
+            function button2() {
+              load(2);
+            }
+            function button3() {
+              load(3);
+            }
+            function button4() {
+              load(4);
+            }
+            function button5() {
+              load(5);
+            }
+            function button6() {
+              load(6);
+            }
+
+
+            function load($day) {
+              //userid
+              $id = 2;//$_COOKIE['id'];
+
+              //creates connection to database
+              $connection = new mysqli('localhost', 'root', '', 'kursplaner');
+
+              for($i=1;$i<6;$i++){
+
+                //get kid where timeslot is = i and which are taken by the student
+                $sql = "SELECT KID FROM takesPlace as tp natural join appointment as ap natural join (SELECT KID FROM take WHERE UID=$id) as t WHERE ap.day= $day AND ap.timeslot = $i";
+
+                //
+                $result = $connection->query($sql);
+
+                if (!$result) {
+                  echo '<tr id="'.$i.'"><th>Free time!</th></tr>';
+                }else{
+                  //
+                  $datensatz = $result->fetch_assoc();
+
+                  //get Id of the class
+                  $kid = $datensatz['KID'];
+
+                  //new sql comand to get the subject and kürzel of the termin
+                  $sql1 = "SELECT subject, token FROM class WHERE KID=$kid;";
+
+                  //
+                  $result1 = $connection->query($sql1);
+
+                  if (!$result1) {
+                    echo '<tr id="'.$i.'"><th>Free time!</th></tr>';
+                  }else{
+                    $datensatz1 = $result1->fetch_assoc();
+                    //Create new <tr> tag with subject name in it
+                    echo '<tr id="'.$i.'"><th>'.$datensatz1['subject'].'</br>'.$datensatz1['token'].'</th></tr>';
+                  }
+                }
+              }
+              $connection->close();
+            }
+          ?>
+        </table>
+      </center>
     </div>
 
   </body>
