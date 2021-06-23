@@ -37,22 +37,6 @@
           <input type="submit" name="Fri" value="Friday"/>
         </form>
       </center>
-      <!--gets the default date and the input of the button-->
-      <script>
-      //if('day'==null){
-          var d = new Date();
-          var n = d.getDay();
-          if(n>5){
-            n=1;
-          }
-          document.cookie = "day="+n;       //delete cookie after time
-        //}
-
-        function clicked(day){
-          document.cookie = "day="+day;
-          window.location.reload();
-        }
-      </script>
 
     </header>
 
