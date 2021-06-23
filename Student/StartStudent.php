@@ -60,24 +60,25 @@
       <center>
         <table>
           <?php
-            load(date("N"));
             if(array_key_exists('Menu', $_POST)) {
+            }
+            else if(array_key_exists('Mon', $_POST)) {
               button1();
             }
-            if(array_key_exists('Mon', $_POST)) {
+            else if(array_key_exists('Tue', $_POST)) {
               button2();
             }
-            if(array_key_exists('Tue', $_POST)) {
+            else if(array_key_exists('Wed', $_POST)) {
               button3();
             }
-            if(array_key_exists('Wed', $_POST)) {
+            else if(array_key_exists('Thur', $_POST)) {
               button4();
             }
-            if(array_key_exists('Thur', $_POST)) {
+            else if(array_key_exists('Fri', $_POST)) {
               button5();
             }
-            if(array_key_exists('Fri', $_POST)) {
-              button6();
+            else{
+              load(date("N"));
             }
 
             function button1() {
@@ -95,10 +96,6 @@
             function button5() {
               load(5);
             }
-            function button6() {
-              load(6);
-            }
-
 
             function load($day) {
               //userid
