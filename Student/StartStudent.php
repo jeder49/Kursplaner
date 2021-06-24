@@ -23,6 +23,7 @@
         include 'login.php';
       }
       */
+      $type = $_GET['type'];
     ?>
 
 
@@ -44,44 +45,42 @@
       <center>
         <table>
           <?php
-            if(array_key_exists('Menu', $_POST)) {
-            }
-            else if(array_key_exists('Mon', $_POST)) {
-              button1();
+            if(array_key_exists('Mon', $_POST)) {
+              button1($type);
             }
             else if(array_key_exists('Tue', $_POST)) {
-              button2();
+              button2($type);
             }
             else if(array_key_exists('Wed', $_POST)) {
-              button3();
+              button3($type);
             }
             else if(array_key_exists('Thur', $_POST)) {
-              button4();
+              button4($type);
             }
             else if(array_key_exists('Fri', $_POST)) {
-              button5();
+              button5($type);
             }
             else{
-              load(date("N"));
+              load(date("N"),$type);
             }
 
-            function button1() {
-              load(1);
+            function button1($type) {
+              load(1,$type);
             }
-            function button2() {
-              load(2);
+            function button2($type) {
+              load(2,$type);
             }
-            function button3() {
-              load(3);
+            function button3($type) {
+              load(3,$type);
             }
-            function button4() {
-              load(4);
+            function button4($type) {
+              load(4,$type);
             }
-            function button5() {
-              load(5);
+            function button5($type) {
+              load(5,$type);
             }
 
-            function load($day) {
+            function load($day,$type) {
               //userid
               $id = 2;//$_COOKIE['id'];
 
@@ -106,7 +105,7 @@
                   $kid = $datensatz['KID'];
 
                   //new sql comand to get the subject and kürzel of the termin
-                  $sql1 = "SELECT subject, token FROM class WHERE KID=$kid;";
+                  $sql1 = "SELECT KID,subject, token FROM class WHERE KID=$kid;";
 
                   //
                   $result1 = $connection->query($sql1);
@@ -116,7 +115,7 @@
                   }else{
                     $datensatz1 = $result1->fetch_assoc();
                     //Create new <tr> tag with subject name in it
-                    echo '<tr id="'.$i.'"><th>'.$datensatz1['subject'].'</br>'.$datensatz1['token'].'</th></tr>';
+                    echo '<tr><th><a href=class.php?id='.$datensatz1['KID'].'&type='.$type.'>'.$datensatz1['subject'].'</a>'.'</br>'.$datensatz1['token'].'</th></tr>';
                   }
                 }
               }

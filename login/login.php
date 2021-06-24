@@ -12,7 +12,15 @@
   <body>
     <center>
       <div>
-      <form>
+
+        <?php
+          if(array_key_exists('login', $_POST)) {
+            login();
+          }
+        ?>
+
+      <form method="post">
+
         <!--gets username by the user-->
         <input type="text" id = "username" placeholder="username"><br/>
 
@@ -25,9 +33,9 @@
         -->
 
         <!--button to submit the username and password-->
-        <input type="submit" onclick="doHashThing()" value="lets go!"/><br/>
+        <input type="submit" onclick="doHashThing()" value="lets go!" name="login"/><br/>
       </form>
-        <!--transforms the password in a hash-->
+
         <script>
         /*
         function getCookie(name) {
@@ -97,6 +105,8 @@
 
             //
             function doHashThing(){
+              //deleteCookie();
+
               //gets username
               var user = document.getElementById('username').value;
 
@@ -116,6 +126,7 @@
 
             $username = "";
             //
+          function login(){
             if(isset($_COOKIE['username'])){
               $username = $_COOKIE['username'];
               $password = $_COOKIE['password'];
@@ -161,6 +172,7 @@
               //retuns false because no user with this password exists
               return false;
             }
+          }
 
 
             function checkRights($id,$connection){
@@ -178,53 +190,46 @@
               if($result1 != false ){
                 $datensatz1 = $result1->fetch_assoc();
               }
-              echo "<script>console.log('1: '+".$datensatz1['count(SID)'].");";
               if($result2 != false){
                 $datensatz2 = $result2->fetch_assoc();
               }
-              echo "<script>console.log('2: '+".$datensatz2['count(UID)'].");";
               if($result3 != false ){
                 $datensatz3 = $result3->fetch_assoc();
               }
-              echo "<script>console.log('3: '+".$datensatz3['count(UID)'].");";
               //if the user is to find in the in the class tabel a student representetive
 
               if ($datensatz1['count(SID)']!=0) {
                 //cookie to save type of user
-                setcookie('typ','student representetive');
-
+                //setcookie('typ','student representetive');
                 //
-                header('Location: /kursplaner/Student/startStudent.php');
+                header('Location: /kursplaner/Student/startStudent.php?type=studentRepresentetive');
               }
 
               //if the user is to find in the in the teacher tabel
               else if ($datensatz2['count(UID)']!=0) {
                 //cookie to save type of user
-                setcookie('typ','teacher');
-
+                //setcookie('typ','teacher');
                 //
-                header('Location: /kursplaner/Student/startStudent.php');
+                header('Location: /kursplaner/Student/startStudent.php?type=teacher');
               }
 
               //if the user is to find in the in the admin tabel
               else if ($datensatz3['count(UID)']!=0) {
                 //cookie to save type of user
                 setcookie('typ','admin');
-
                 //
                 header('Location: /kursplaner/admin/startAdmin.html');
               }
               //if the user is to find in the in any tabel
               else{
                 //cookie to save type of user
-                setcookie('typ','student');
-
+                //setcookie('typ','student');
                 //
-                header('Location: /kursplaner/Student/startStudent.php');
+                header('Location: /kursplaner/Student/startStudent.php?type=student');
               }
             }
           ?>
-          <p><a href="rest.html">passwort vergessen?</a></p>
+          <p><a href="getUser.php">passwort vergessen?</a></p>
       </div>
     </center>
   </body>

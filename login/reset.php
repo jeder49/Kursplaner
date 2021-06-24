@@ -16,7 +16,7 @@
     <form action="entries.php" method="post">
 
       <!---->
-      <input name = "searchTerm" placeholder="term">
+      <input name = "searchTerm" placeholder="term"><br/>
 
       <!---->
       <input type="submit"></input>

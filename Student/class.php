@@ -9,6 +9,8 @@
     -->
     <title>
       <?php
+        $type = $_GET['type'];
+
         //gets Id by former page
         $id = $_GET["id"];
 
@@ -31,6 +33,7 @@
   <body>
     <header>
       <center>
+
         <h1>
 
           <!--makes contact to the DB and prints out subjectname-->
@@ -54,6 +57,11 @@
         ?>
 
       </center>
+      <?php
+        if($type == "studentRepresentetive"){
+          echo '<a href=editMode.php?id='.$id.'&type='.$type.'>edit</a>';
+        }
+      ?>
     </header>
     <div>
       <center>
@@ -85,11 +93,11 @@
                     $datediff = $now - $exam_date;
 
                     if($datediff <= 3){
-                      echo '<div color="#FF0000">'.$datensatz2['date'].'</div></br>';
+                      echo '<p style="color:#ff0000;">'.$datensatz2['date'].'</p>';
                     }else if($datediff <= 7){
-                      echo '<div color="#FFB500">'.$datensatz2['date'].'</div></br>';
+                      echo '<p style="color:#FFB500;">'.$datensatz2['date'].'</p>';
                     }else{
-                      echo '<div color=#00FF16>'.$datensatz2['date'].'</div></br>';
+                      echo '<p style="color:#00FF16;">'.$datensatz2['date'].'</p>';
                     }
                     echo $datensatz2['topic'];
                   }
@@ -128,14 +136,11 @@
             <tr>
               <td>
                 <?php
-                $sql3 = "SELECT nickname,username FROM user natural join student as s WHERE s.UID=$id;";
+                $sql3 = "SELECT nickname,username FROM user as u right join (SELECT UID FROM take WHERE KID=$id) as a on u.UID=a.UID;";
                 $result3 = $connection->query($sql3);
                 if($result3!=false){
                   while ($datensatz3 = $result3->fetch_assoc()) {
-                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'];
-                  }
-                  if($datensatz3==""){
-                    echo 'It seams like you are alone in this class! Feel already lonely?';
+                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'</br>';
                   }
                 }else{
                   echo 'It seams like you are alone in this class! Feel already lonely?';
