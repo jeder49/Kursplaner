@@ -147,7 +147,8 @@
                     //if username and password fit it returns true
                     if($datensatz["username"] == $username && $datensatz["password"] == $password){
                       //is admin or not?
-                      $id = setcookie('id',$datensatz['UID']);
+                      setcookie('id',$datensatz['UID']);
+                      $id = $datensatz['UID'];
                       checkRights($id,$connection);
                     }
 
@@ -177,12 +178,15 @@
               if($result1 != false ){
                 $datensatz1 = $result1->fetch_assoc();
               }
+              echo "<script>console.log('1: '+".$datensatz1['count(SID)'].");";
               if($result2 != false){
                 $datensatz2 = $result2->fetch_assoc();
               }
+              echo "<script>console.log('2: '+".$datensatz2['count(UID)'].");";
               if($result3 != false ){
                 $datensatz3 = $result3->fetch_assoc();
               }
+              echo "<script>console.log('3: '+".$datensatz3['count(UID)'].");";
               //if the user is to find in the in the class tabel a student representetive
 
               if ($datensatz1['count(SID)']!=0) {
