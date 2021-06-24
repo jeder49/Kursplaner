@@ -15,7 +15,7 @@
         $id = $_GET["id"];
 
         //get data about the class
-        $sql = "SELECT token,homework,TID,SID,subject FROM class WHERE KID=$id;";
+        $sql = "SELECT token,homework,TID,subject FROM class WHERE KID=$id;";
 
         //creates connection to database
         $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -58,7 +58,7 @@
 
       </center>
       <?php
-        echo '<a href=class.php?id='.$id.'&type='.$type.'>edit</a>';
+        echo '<button onclick=window.location.href="class.php?id='.$id.'&type='.$type.'">edit</button>';
       ?>
     </header>
     <div>
@@ -93,11 +93,11 @@
                     $datediff = $now - $exam_date;
 
                     if($datediff <= 3){
-                      echo '<div><p style="color:#ff0000;">'.$datensatz2['date'].'<a href=delete.php?table=exam&id='.$i.'&KID='.$id.'>delete</a>'.'</p>';
+                      echo '<div><p style="color:#ff0000;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
                     }else if($datediff <= 7){
-                      echo '<div><p style="color:#FFB500;">'.$datensatz2['date'].'<a href=delete.php?table=exam&id='.$i.'&KID='.$id.'>delete</a>'.'</p>';
+                      echo '<div><p style="color:#FFB500;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
                     }else{
-                      echo '<div><p style="color:#00FF16;">'.$datensatz2['date'].'<a href=delete.php?table=exam&id='.$i.'&KID='.$id.'>delete</a>'.'</p>';
+                      echo '<div><p style="color:#00FF16;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
                     }
                     echo $datensatz2['topic'].'</div>';
 
@@ -125,7 +125,15 @@
             <tr>
               <td>
                 <?php
-                  echo $datensatz['homework'].'<a href=delete.php?table=homework&id=0&KID='.$id.'>delete</a>';
+                  $hid=$datensatz['homework'];
+                  $sql3 = "SELECT discription FROM homework WHERE HID=$hid;";
+                  $result3 = $connection->query($sql3);
+                  if($result3!=false){
+
+                    while ($datensatz3 = $result3->fetch_assoc()) {
+                      echo $datensatz3['discription'].'<button onclick=window.location.href="delete.php?table=homework&id=0&KID='.$id.'">delete</button>';
+                    }
+                  }
                 ?>
               </td>
             </tr>
@@ -148,7 +156,7 @@
                 $result3 = $connection->query($sql3);
                 if($result3!=false){
                   while ($datensatz3 = $result3->fetch_assoc()) {
-                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'<a href=delete.php?table=mates&id='.$datensatz3['UID'].'&KID='.$id.'>delete</a></br>';
+                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'<button onclick=window.location.href="delete.php?table=mates&id='.$datensatz3['UID'].'&KID='.$id.'">delete</button></br>';
                   }
                 }else{
                   echo '(DB error)It seams like you are alone in this class! Feel already lonely?';

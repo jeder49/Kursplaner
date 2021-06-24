@@ -177,7 +177,7 @@
 
             function checkRights($id,$connection){
               //looks if user is admin, teacher, student or students representitive
-              $sql1 = "SELECT count(SID) FROM class WHERE SID=$id;";
+              $sql1 = "SELECT count(UID) FROM represent WHERE UID=$id;";
               $sql2 = "SELECT count(UID) FROM teacher WHERE UID=$id;";
               $sql3 = "SELECT count(UID) FROM admin WHERE UID=$id;";
 
@@ -198,11 +198,11 @@
               }
               //if the user is to find in the in the class tabel a student representetive
 
-              if ($datensatz1['count(SID)']!=0) {
+              if ($datensatz1['count(UID)']!=0) {
                 //cookie to save type of user
                 //setcookie('typ','student representetive');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=studentRepresentetive');
+                header('Location: /kursplaner/Student/startStudent.php?type=studentRepresentetive&id='.$id);
               }
 
               //if the user is to find in the in the teacher tabel
@@ -210,7 +210,7 @@
                 //cookie to save type of user
                 //setcookie('typ','teacher');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=teacher');
+                header('Location: /kursplaner/Student/startStudent.php?type=teacher&id='.$id);
               }
 
               //if the user is to find in the in the admin tabel
@@ -225,11 +225,11 @@
                 //cookie to save type of user
                 //setcookie('typ','student');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=student');
+                header('Location: /kursplaner/Student/startStudent.php?type=student&id='.$id);
               }
             }
           ?>
-          <p><a href="getUser.php">passwort vergessen?</a></p>
+          <p><a href="getUser.php">forgot password?</a></p>
       </div>
     </center>
   </body>

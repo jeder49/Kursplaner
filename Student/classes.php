@@ -26,7 +26,7 @@
         <center>
           <table id="classes">
             <?php
-              $id = 2;//$_COOKIE['id'];
+              $id = $_GET['id'];
 
               $sql = "SELECT KID,token,subject FROM class natural join (SELECT KID FROM take WHERE UID=$id) as t;";
 

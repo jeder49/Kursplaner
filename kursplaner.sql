@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 23. Jun 2021 um 16:45
--- Server-Version: 10.1.21-MariaDB
--- PHP-Version: 5.6.30
+-- Generation Time: Jun 25, 2021 at 01:24 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `kursplaner`
+-- Database: `kursplaner`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -31,7 +31,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`UID`) VALUES
@@ -40,7 +40,7 @@ INSERT INTO `admin` (`UID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `appointment`
+-- Table structure for table `appointment`
 --
 
 CREATE TABLE `appointment` (
@@ -50,7 +50,7 @@ CREATE TABLE `appointment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `appointment`
+-- Dumping data for table `appointment`
 --
 
 INSERT INTO `appointment` (`AID`, `day`, `timeslot`) VALUES
@@ -83,52 +83,52 @@ INSERT INTO `appointment` (`AID`, `day`, `timeslot`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `class`
+-- Table structure for table `class`
 --
 
 CREATE TABLE `class` (
   `KID` int(11) NOT NULL,
   `token` varchar(11) NOT NULL,
-  `homework` varchar(200) NOT NULL,
+  `homework` int(11) NOT NULL,
   `lk` tinyint(1) NOT NULL,
-  `SID` int(11) NOT NULL,
   `TID` int(11) NOT NULL,
   `subject` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `class`
+-- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`KID`, `token`, `homework`, `lk`, `SID`, `TID`, `subject`) VALUES
-(1, 'LKG01', 'Seite 17 im Buch\r\n-user3', 1, 3, 4, 'Geschichte'),
-(2, 'GKE01', '', 0, 5, 4, 'English'),
-(3, 'LKM01', '', 1, 5, 5, 'Mathe');
+INSERT INTO `class` (`KID`, `token`, `homework`, `lk`, `TID`, `subject`) VALUES
+(1, 'LKG01', 1, 1, 4, 'Geschichte'),
+(2, 'GKE01', 0, 0, 4, 'English'),
+(3, 'LKM01', 0, 1, 5, 'Mathe');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `exam`
+-- Table structure for table `exam`
 --
 
 CREATE TABLE `exam` (
   `KID` int(11) NOT NULL,
   `date` date NOT NULL,
-  `topic` varchar(200) NOT NULL
+  `topic` varchar(200) NOT NULL,
+  `EID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `exam`
+-- Dumping data for table `exam`
 --
 
-INSERT INTO `exam` (`KID`, `date`, `topic`) VALUES
-(1, '2021-06-15', 'Herbert der Große'),
-(1, '2021-08-24', 'Ich! Ich! Ich!\r\n(Egoismus)');
+INSERT INTO `exam` (`KID`, `date`, `topic`, `EID`) VALUES
+(1, '2021-06-15', 'Herbert der Große', 1),
+(1, '2021-08-24', 'Ich! Ich! Ich!\r\n(Egoismus)', 2);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -136,7 +136,7 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `student`
+-- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`UID`) VALUES
@@ -149,7 +149,7 @@ INSERT INTO `student` (`UID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `take`
+-- Table structure for table `take`
 --
 
 CREATE TABLE `take` (
@@ -158,20 +158,20 @@ CREATE TABLE `take` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `take`
+-- Dumping data for table `take`
 --
 
 INSERT INTO `take` (`KID`, `UID`) VALUES
 (1, 2),
 (1, 3),
+(2, 2),
 (2, 5),
-(3, 5),
-(2, 2);
+(3, 5);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `takesplace`
+-- Table structure for table `takesplace`
 --
 
 CREATE TABLE `takesplace` (
@@ -180,7 +180,7 @@ CREATE TABLE `takesplace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `takesplace`
+-- Dumping data for table `takesplace`
 --
 
 INSERT INTO `takesplace` (`KID`, `AID`) VALUES
@@ -195,7 +195,7 @@ INSERT INTO `takesplace` (`KID`, `AID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `teacher`
+-- Table structure for table `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -204,7 +204,7 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `teacher`
+-- Dumping data for table `teacher`
 --
 
 INSERT INTO `teacher` (`UID`, `token`) VALUES
@@ -214,7 +214,7 @@ INSERT INTO `teacher` (`UID`, `token`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -226,137 +226,141 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UID`, `email`, `nickname`, `username`, `password`) VALUES
 (1, '', 'rich', 'user0', '-928147211'),
-(2, '', '', 'user1', '-928147210'),
-(3, '', '', 'user2', '-928147209'),
-(4, '', '', 'user3', '-928147208'),
-(5, '', '', 'user4', '-928147207'),
-(6, '', '', 'user5', '-928147206'),
-(7, '', '', 'user6', '-928147205');
+(2, '', 'bob', 'user1', '-928147210'),
+(3, '', 'george', 'user2', '-928147209'),
+(4, '', 'asd', 'user3', '-928147208'),
+(5, '', 'Mrx', 'user4', '-928147207'),
+(6, '', 'Yes', 'user5', '-928147206'),
+(7, '', 'NO', 'user6', '-928147205');
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`UID`);
 
 --
--- Indizes für die Tabelle `appointment`
+-- Indexes for table `appointment`
 --
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`AID`);
 
 --
--- Indizes für die Tabelle `class`
+-- Indexes for table `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`KID`),
-  ADD KEY `student_class` (`SID`),
   ADD KEY `teacher_class` (`TID`);
 
 --
--- Indizes für die Tabelle `exam`
+-- Indexes for table `exam`
 --
 ALTER TABLE `exam`
+  ADD PRIMARY KEY (`EID`),
   ADD KEY `class_exam` (`KID`);
 
 --
--- Indizes für die Tabelle `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`UID`);
 
 --
--- Indizes für die Tabelle `take`
+-- Indexes for table `take`
 --
 ALTER TABLE `take`
-  ADD KEY `class_take` (`KID`),
+  ADD PRIMARY KEY (`KID`,`UID`),
   ADD KEY `student_take` (`UID`);
 
 --
--- Indizes für die Tabelle `takesplace`
+-- Indexes for table `takesplace`
 --
 ALTER TABLE `takesplace`
   ADD KEY `class_takesPlace` (`KID`),
   ADD KEY `appointment_takesPlace` (`AID`);
 
 --
--- Indizes für die Tabelle `teacher`
+-- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD PRIMARY KEY (`UID`);
 
 --
--- Indizes für die Tabelle `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`UID`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `appointment`
+-- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
   MODIFY `AID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
--- AUTO_INCREMENT für Tabelle `class`
+-- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
   MODIFY `KID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT für Tabelle `user`
+-- AUTO_INCREMENT for table `exam`
+--
+ALTER TABLE `exam`
+  MODIFY `EID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `UID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- Constraints der exportierten Tabellen
+-- Constraints for dumped tables
 --
 
 --
--- Constraints der Tabelle `admin`
+-- Constraints for table `admin`
 --
 ALTER TABLE `admin`
   ADD CONSTRAINT `user_admin` FOREIGN KEY (`UID`) REFERENCES `user` (`UID`);
 
 --
--- Constraints der Tabelle `class`
+-- Constraints for table `class`
 --
 ALTER TABLE `class`
-  ADD CONSTRAINT `student_class` FOREIGN KEY (`SID`) REFERENCES `student` (`UID`),
   ADD CONSTRAINT `teacher_class` FOREIGN KEY (`TID`) REFERENCES `teacher` (`UID`);
 
 --
--- Constraints der Tabelle `exam`
+-- Constraints for table `exam`
 --
 ALTER TABLE `exam`
   ADD CONSTRAINT `class_exam` FOREIGN KEY (`KID`) REFERENCES `class` (`KID`);
 
 --
--- Constraints der Tabelle `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `user_student` FOREIGN KEY (`UID`) REFERENCES `user` (`UID`);
 
 --
--- Constraints der Tabelle `take`
+-- Constraints for table `take`
 --
 ALTER TABLE `take`
   ADD CONSTRAINT `class_take` FOREIGN KEY (`KID`) REFERENCES `class` (`KID`),
   ADD CONSTRAINT `student_take` FOREIGN KEY (`UID`) REFERENCES `student` (`UID`);
 
 --
--- Constraints der Tabelle `teacher`
+-- Constraints for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD CONSTRAINT `user_teacher` FOREIGN KEY (`UID`) REFERENCES `user` (`UID`);

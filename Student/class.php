@@ -15,7 +15,7 @@
         $id = $_GET["id"];
 
         //get data about the class
-        $sql = "SELECT token,homework,TID,SID,subject FROM class WHERE KID=$id;";
+        $sql = "SELECT token,homework,TID,subject FROM class WHERE KID=$id;";
 
         //creates connection to database
         $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -59,7 +59,7 @@
       </center>
       <?php
         if($type == "studentRepresentetive"){
-          echo '<a href=editMode.php?id='.$id.'&type='.$type.'>edit</a>';
+          echo '<button onclick=window.location.href="editMode.php?id='.$id.'&type='.$type.'">edit</button>';
         }
       ?>
     </header>
@@ -120,7 +120,15 @@
             <tr>
               <td>
                 <?php
-                  echo $datensatz['homework'];
+                  $hid=$datensatz['homework'];
+                  $sql3 = "SELECT discription FROM homework WHERE HID=$hid;";
+                  $result3 = $connection->query($sql3);
+                  if($result3!=false){
+
+                    while ($datensatz3 = $result3->fetch_assoc()) {
+                      echo $datensatz3['discription'];
+                    }
+                  }
                 ?>
               </td>
             </tr>
@@ -136,11 +144,11 @@
             <tr>
               <td>
                 <?php
-                $sql3 = "SELECT nickname,username FROM user as u right join (SELECT UID FROM take WHERE KID=$id) as a on u.UID=a.UID;";
-                $result3 = $connection->query($sql3);
-                if($result3!=false){
-                  while ($datensatz3 = $result3->fetch_assoc()) {
-                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'</br>';
+                $sql4 = "SELECT nickname,username FROM user as u right join (SELECT UID FROM take WHERE KID=$id) as a on u.UID=a.UID;";
+                $result4 = $connection->query($sql4);
+                if($result4!=false){
+                  while ($datensatz4 = $result4->fetch_assoc()) {
+                    echo $datensatz4['nickname'].' AKA '.$datensatz4['username'].'</br>';
                   }
                 }else{
                   echo 'It seams like you are alone in this class! Feel already lonely?';
