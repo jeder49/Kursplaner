@@ -48,7 +48,7 @@
 
       <div>
         <center>
-          <table id="classes">
+          <table class="table">
             <?php
               $id = $_GET['id'];
 
@@ -63,7 +63,7 @@
               while ($datensatz = $result->fetch_assoc()) {
 
                 //
-                echo '<tr><th><a href=class.php?id='.$datensatz['KID'].'>'.$datensatz['subject'].'</a>'.'</br>'.$datensatz['token'].'</th></tr>';
+                echo '<tr class="generated"><th class="generated"><a href=class.php?id='.$datensatz['KID'].'>'.$datensatz['subject'].'</a>'.'</br>'.$datensatz['token'].'</th></tr>';
 
               }
               $connection->close();

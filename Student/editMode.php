@@ -97,7 +97,7 @@
                     }else if($datediff <= 7){
                       echo '<div><p style="color:#FFB500;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
                     }else{
-                      echo '<div><p style="color:#00FF16;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
+                      echo '<div><p>'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
                     }
                     echo $datensatz2['topic'].'</div>';
 

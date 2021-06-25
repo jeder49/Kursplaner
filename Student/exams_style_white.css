@@ -62,3 +62,19 @@ body{
 @media(max-width:634px){
 	.navbar-nav{display:none}
 }
+/*julia*/
+table, th, td {
+    /*border: 1px solid black;*/
+  }
+table{
+    width: 70%;
+  }
+tr:nth-child(even) {
+    background-color: #dbf1d9;
+
+ }
+tr:nth-child(odd) {
+    height: 45px;
+    background-color: #C0F390;
+ }
+ tr:hover {background-color: #77f072cc;}

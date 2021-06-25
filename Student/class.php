@@ -6,7 +6,7 @@
     <!--
       <link rel="stylesheet" href="class_style_dark.css">-->
       <link rel="stylesheet" href="class_style_white.css">
-      
+
     <title>
       <?php
         $type = $_GET['type'];
@@ -123,7 +123,7 @@
                     }else if($datediff <= 7){
                       echo '<p style="color:#FFB500;">'.$datensatz2['date'].'</p>';
                     }else{
-                      echo '<p style="color:#00FF16;">'.$datensatz2['date'].'</p>';
+                      echo '<p>'.$datensatz2['date'].'</p>';
                     }
                     echo $datensatz2['topic'];
                   }
