@@ -86,13 +86,21 @@
               <td>
                 <ul>
                   <li>
-                    <input type="text" name="name" placeholder="<?php $datensatz['nickname']?>"/>
+                    <?php
+                    echo "<input type='text' name='name' placeholder='".$datensatz['nickname']."'/>";
+                    ?>
                   </li>
                   <li>
-                    <input type="text" name="password" />
+                    <input type="text" name="password" placeholder="password" />
                   </li>
                   <li>
-                    <input type="text" name="email" placeholder="<?php $datensatz['email']?>"/>
+                    <?php
+                      if($datensatz['email']!=""){
+                        echo "<input type='text' name='email' placeholder='".$datensatz['email']."'/>";
+                      }else{
+                        echo "<input type='text' name='email' placeholder='email'/>";
+                      }
+                    ?>
                   </li>
                 </ul>
               </td>
@@ -103,7 +111,7 @@
               </td>
               <td>
                 <label class="switch">
-                  <input type="checkbox">
+                  <input type="checkbox" name="theme">
                   <span class="slider"></span>
                 </label>
               </td>
@@ -126,11 +134,52 @@
     <center>
       <?php
         if(array_key_exists('sub', $_POST)) {
+          $connection = new mysqli('localhost', 'root', '', 'kursplaner');
           $name = $_POST['name'];
-          $password = $_POST['password'];
+          $passwordIn = $_POST['password'];
+          $email = $_POST['email'];
           $id = $_GET['id'];
+
+          function createHash($string){
+            $hash = 0;
+            //(already prevent in Line 19)
+            if (strlen($string) == 0) return $hash;
+
+              //
+              for ($i = 0; $i < strlen($string); $i++) {
+                //get character by position
+                $char = $string[$i];
+
+                //to explain
+                $hash = (($hash << 5) - $hash) + $char;
+
+                //to explain
+                $hash = $hash & $hash;
+              }
+              return $hash;
+            }
+            $password = createHash($passwordIn);
+            $sql = "UPDATE user SET";
+            if($_POST['name']!=""){
+              $sql = $sql." username = $name";
+            }
+            if($_POST['password']!=""){
+              $sql = $sql." password = $password";
+            }
+            if($_POST['email']!=""){
+              $sql = $sql." email = $email";
+            }
+            $sql = $sql." WHERE UID = $id";
+
+            $connection->query($sql);
+            $connection->close();
+            if(isset($_POST['theme'])){
+              setcookie('theme','dark');
+            } else{
+              setcookie('theme','white');
+            }
         }
-        $connection->close();
+        //$connection->close();
     ?>
     </center>
   </body>
