@@ -40,7 +40,7 @@
 			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
         echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
         echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
-        echo "<a  class='hover' href='../login/login.php'>log out</a>";
+        echo "<a  class='hover' href='../login.php'>log out</a>";
       ?>
     </div>
 
@@ -111,7 +111,18 @@
               </td>
               <td>
                 <label class="switch">
-                  <input type="checkbox" name="theme">
+
+                  <?php
+                    if(isset($_COOKIE['theme'])){
+                      if($_COOKIE['theme']=='white'){
+                        echo "<input type='checkbox' name='theme'>";
+                      }else{
+                        echo "<input type='checkbox' name='theme' checked>";
+                      }
+                    }else {
+                      echo "<input type='checkbox' name='theme'>";
+                    }
+                  ?>
                   <span class="slider"></span>
                 </label>
               </td>
@@ -193,7 +204,7 @@
           if(isset($_POST['theme'])){
             setcookie('theme','dark');
           } else{
-            setcookie('theme','white');
+            setcookie('theme','white',time()+ 60 * 60 * 24 * 30,'../');
           }
         }
         //$connection->close();

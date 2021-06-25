@@ -40,7 +40,7 @@
 			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
         echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
         echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
-        echo "<a  class='hover' href='../login/login.php'>log out</a>";
+        echo "<a  class='hover' href='../login.php'>log out</a>";
       ?>
     </div>
 

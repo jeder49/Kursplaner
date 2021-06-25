@@ -3,8 +3,8 @@
     <!--definds typ of character set-->
     <meta charset="UTF-8">
 
-    <!--style of the html file-->
-    <link rel="stylesheet" href="login_style_dark.css">
+    <!--style of the html file
+    <link rel="stylesheet" href="login_style_dark.css">-->
     <link rel="stylesheet" href="login_style_white.css">
 
     <title>login</title>
@@ -202,7 +202,7 @@
                 //cookie to save type of user
                 //setcookie('typ','student representetive');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
+                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
               }
 
               //if the user is to find in the in the teacher tabel
@@ -210,7 +210,7 @@
                 //cookie to save type of user
                 //setcookie('typ','teacher');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
+                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
               }
 
               //if the user is to find in the in the admin tabel
@@ -218,14 +218,14 @@
                 //cookie to save type of user
                 setcookie('typ','admin');
                 //
-                header('Location: /kursplaner/admin/startAdmin.html');
+                header('Location: /Kursplaner/login/admin/startAdmin.html');
               }
               //if the user is to find in the in any tabel
               else{
                 //cookie to save type of user
                 //setcookie('typ','student');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
+                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
               }
             }
           ?>
