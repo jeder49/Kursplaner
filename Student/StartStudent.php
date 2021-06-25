@@ -44,11 +44,10 @@
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
       <?php
         $id= $_GET['id'];
-        $type= $_GET['type'];
-        echo "<a  class='hover' href='startStudent.php?type=$type&id=$id'>Menu</a>";
-			  echo "<a  class='hover' href='exams.php?type=$type&id=$id'>exams</a>";
-        echo "<a  class='hover' href='classes.php?type=$type&id=$id'>classes</a>";
-        echo "<a  class='hover' href='setting.php?type=$type&id=$id'>settings</a>";
+        echo "<a  class='hover' href='startStudent.php?id=$id'>Menu</a>";
+			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
+        echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
+        echo "<a  class='hover' href='setting.php?&id=$id'>settings</a>";
         echo "<a  class='hover' href='../login/login.php'>log out</a>";
       ?>
     </div>
@@ -61,45 +60,45 @@
           <?php
             if(array_key_exists('Mon', $_POST)) {
               echo '<script>openMonday();</script>';
-              button1($type);
+              button1();
             }
             else if(array_key_exists('Tue', $_POST)) {
               echo '<script>openTuesday();</script>';
-              button2($type);
+              button2();
             }
             else if(array_key_exists('Wed', $_POST)) {
               echo '<script>openWednesday();</script>';
-              button3($type);
+              button3();
             }
             else if(array_key_exists('Thur', $_POST)) {
               echo '<script>openThursday();</script>';
-              button4($type);
+              button4();
             }
             else if(array_key_exists('Fri', $_POST)) {
               echo '<script>openFriday();</script>';
-              button5($type);
+              button5();
             }
             else{
-              load(date("N"),$type);
+              load(date("N"));
             }
 
-            function button1($type) {
-              load(1,$type);
+            function button1() {
+              load(1);
             }
-            function button2($type) {
-              load(2,$type);
+            function button2() {
+              load(2);
             }
-            function button3($type) {
-              load(3,$type);
+            function button3() {
+              load(3);
             }
-            function button4($type) {
-              load(4,$type);
+            function button4() {
+              load(4);
             }
-            function button5($type) {
-              load(5,$type);
+            function button5() {
+              load(5);
             }
 
-            function load($day,$type) {
+            function load($day) {
               //userid
               $id= $_GET['id'];
 
@@ -134,7 +133,7 @@
                   }else{
                     $datensatz1 = $result1->fetch_assoc();
                     //Create new <tr> tag with subject name in it
-                    echo '<tr><th><a href=class.php?id='.$datensatz1['KID'].'&type='.$type.'>'.$datensatz1['subject'].'</a>'.'</br>'.$datensatz1['token'].'</th></tr>';
+                    echo '<tr><th><a href=class.php?id='.$id.'&kid='.$datensatz1['KID'].'>'.$datensatz1['subject'].'</a>'.'</br>'.$datensatz1['token'].'</th></tr>';
                   }
                 }
               }

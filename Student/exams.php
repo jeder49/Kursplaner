@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <!--
-      <link rel="stylesheet" href="classes_style_dark.css">-->
+      <link rel="stylesheet" href="exams_style_dark.css">-->
       <link rel="stylesheet" href="exams_style_white.css">
     <title>exams</title>
   </head>
@@ -36,11 +36,10 @@
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
       <?php
         $id= $_GET['id'];
-        $type= $_GET['type'];
-        echo "<a  class='hover' href='startStudent.php?type=$type&id=$id'>Menu</a>";
-			  echo "<a  class='hover' href='exams.php?type=$type&id=$id'>exams</a>";
-        echo "<a  class='hover' href='classes.php?type=$type&id=$id'>classes</a>";
-        echo "<a  class='hover' href='setting.php?type=$type&id=$id'>settings</a>";
+        echo "<a  class='hover' href='startStudent.php?id=$id'>Menu</a>";
+			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
+        echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
+        echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
         echo "<a  class='hover' href='../login/login.php'>log out</a>";
       ?>
     </div>
@@ -68,7 +67,7 @@
               $datensatz1 = $result1->fetch_assoc();
 
               //prints out the
-              echo "<tr><th><a href=class.php?id=".$datensatz['EID'].">".$datensatz1['subject']."</a></br>".$datensatz['date']."</th></tr>";
+              echo "<tr><th><a href=class.php?id=".$id."&kid=".$datensatz['KID'].">".$datensatz1['subject']."</a></br>".$datensatz['date']."</th></tr>";
 
             }
             $connection->close();

@@ -37,11 +37,10 @@
   			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
         <?php
           $id= $_GET['id'];
-          $type= $_GET['type'];
-          echo "<a  class='hover' href='startStudent.php?type=$type&id=$id'>Menu</a>";
-  			  echo "<a  class='hover' href='exams.php?type=$type&id=$id'>exams</a>";
-          echo "<a  class='hover' href='classes.php?type=$type&id=$id'>classes</a>";
-          echo "<a  class='hover' href='setting.php?type=$type&id=$id'>settings</a>";
+          echo "<a  class='hover' href='startStudent.php?id=$id'>Menu</a>";
+  			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
+          echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
+          echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
           echo "<a  class='hover' href='../login/login.php'>log out</a>";
         ?>
       </div>
@@ -63,7 +62,7 @@
               while ($datensatz = $result->fetch_assoc()) {
 
                 //
-                echo '<tr class="generated"><th class="generated"><a href=class.php?id='.$datensatz['KID'].'>'.$datensatz['subject'].'</a>'.'</br>'.$datensatz['token'].'</th></tr>';
+                echo '<tr class="generated"><th class="generated"><a href=class.php?id='.$id.'&kid='.$datensatz['KID'].'>'.$datensatz['subject'].'</a>'.'</br>'.$datensatz['token'].'</th></tr>';
 
               }
               $connection->close();

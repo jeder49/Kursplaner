@@ -9,13 +9,14 @@
     -->
     <title>
       <?php
-        $type = $_GET['type'];
+
 
         //gets Id by former page
         $id = $_GET["id"];
+        $kid = $_GET["id"];
 
         //get data about the class
-        $sql = "SELECT token,homework,TID,subject FROM class WHERE KID=$id;";
+        $sql = "SELECT token,homework,TID,subject FROM class WHERE KID=$kid;";
 
         //creates connection to database
         $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -49,7 +50,7 @@
           $sql1 = "SELECT token FROM teacher WHERE UID=$tid;";
           $result1 = $connection->query($sql1);
           if($result1!=false){
-            $datensatz1 = $result1->fetch_assoc();
+            $datensatz1['count(UID)'] = $result1->fetch_assoc();
             echo $datensatz['token'].' - '.$datensatz1['token'];
           }else{
             echo 'strange! this class seams to have no teacher?! But who cares.';
@@ -58,7 +59,14 @@
 
       </center>
       <?php
-        echo '<button onclick=window.location.href="class.php?id='.$id.'&type='.$type.'">edit</button>';
+        $sql2 = "SELECT count(UID) FROM represent WHERE UID=$id AND KID=$kid;";
+        $result2 = $connection->query($sql2);
+        if($result2!=false){
+          $datensatz2 = $result2->fetch_assoc();
+          if($datensatz2 != 0){
+              echo '<button onclick=window.location.href="class.php?id='.$id.'&kid='.$kid.'">edit</button>';
+          }
+        }
       ?>
     </header>
     <div>
@@ -79,7 +87,7 @@
             <td>
               <?php
                 $tid=$datensatz['TID'];
-                $sql2 = "SELECT date,topic FROM exam WHERE KID=$id;";
+                $sql2 = "SELECT date,topic FROM exam WHERE KID=$kid;";
                 $result2 = $connection->query($sql2);
                 if($result2!=false){
                   $i=1;
@@ -93,11 +101,11 @@
                     $datediff = $now - $exam_date;
 
                     if($datediff <= 3){
-                      echo '<div><p style="color:#ff0000;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
+                      echo '<div><p style="color:#ff0000;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'">delete</button></p>';
                     }else if($datediff <= 7){
-                      echo '<div><p style="color:#FFB500;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
+                      echo '<div><p style="color:#FFB500;">'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'">delete</button></p>';
                     }else{
-                      echo '<div><p>'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$id.'">delete</button></p>';
+                      echo '<div><p>'.$datensatz2['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'">delete</button></p>';
                     }
                     echo $datensatz2['topic'].'</div>';
 
@@ -131,7 +139,7 @@
                   if($result3!=false){
 
                     while ($datensatz3 = $result3->fetch_assoc()) {
-                      echo $datensatz3['discription'].'<button onclick=window.location.href="delete.php?table=homework&id=0&KID='.$id.'">delete</button>';
+                      echo $datensatz3['discription'].'<button onclick=window.location.href="delete.php?table=homework&id=0&KID='.$kid.'">delete</button>';
                     }
                   }
                 ?>
@@ -152,11 +160,11 @@
             <tr>
               <td>
                 <?php
-                $sql3 = "SELECT u.UID,nickname,username FROM user as u right join (SELECT UID FROM take WHERE KID=$id) as a on u.UID=a.UID;";
+                $sql3 = "SELECT u.UID,nickname,username FROM user as u right join (SELECT UID FROM take WHERE KID=$kid) as a on u.UID=a.UID;";
                 $result3 = $connection->query($sql3);
                 if($result3!=false){
                   while ($datensatz3 = $result3->fetch_assoc()) {
-                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'<button onclick=window.location.href="delete.php?table=mates&id='.$datensatz3['UID'].'&KID='.$id.'">delete</button></br>';
+                    echo $datensatz3['nickname'].' AKA '.$datensatz3['username'].'<button onclick=window.location.href="delete.php?table=mates&id='.$datensatz3['UID'].'&KID='.$kid.'">delete</button></br>';
                   }
                 }else{
                   echo '(DB error)It seams like you are alone in this class! Feel already lonely?';

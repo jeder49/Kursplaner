@@ -202,7 +202,7 @@
                 //cookie to save type of user
                 //setcookie('typ','student representetive');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=studentRepresentetive&id='.$id);
+                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
               }
 
               //if the user is to find in the in the teacher tabel
@@ -210,7 +210,7 @@
                 //cookie to save type of user
                 //setcookie('typ','teacher');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=teacher&id='.$id);
+                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
               }
 
               //if the user is to find in the in the admin tabel
@@ -225,7 +225,7 @@
                 //cookie to save type of user
                 //setcookie('typ','student');
                 //
-                header('Location: /kursplaner/Student/startStudent.php?type=student&id='.$id);
+                header('Location: /kursplaner/Student/startStudent.php?id='.$id);
               }
             }
           ?>

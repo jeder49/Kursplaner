@@ -23,6 +23,24 @@ body{
 	display:flex;
 }
 
+.navbar .A{
+    display:block;
+    color:#f2f2f2;
+    text-align:center;
+    padding:14px 16px;
+    text-decoration:none;
+    font-size:23px;
+}
+
+.navbar a {
+    display:flex;
+    color:#f2f2f2;
+    text-align:center;
+    padding:14px 16px;
+    text-decoration:none;
+    font-size:23px;
+}
+
 .navbar .form input {
     /*display:flex;*/
 		display: inline-block;
