@@ -85,7 +85,6 @@
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
       <?php
         $id= $_GET['id'];
-        $type= $_GET['type'];
         echo "<a  class='hover' href='startStudent.php?id=$id'>Menu</a>";
 			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
         echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
@@ -155,7 +154,7 @@
                   $result4 = $connection->query($sql4);
                   if($result4!=false){
                     while ($datensatz4 = $result4->fetch_assoc()) {
-                      echo $datensatz4['discription'];
+                      echo $datensatz4['discription'].'</br>';
                     }
                   }
                 ?>

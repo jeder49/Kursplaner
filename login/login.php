@@ -5,7 +5,7 @@
 
     <!--style of the html file
     <link rel="stylesheet" href="login_style_dark.css">-->
-    <link rel="stylesheet" href="login_style_white.css">
+    <link rel="stylesheet" href="login_style_white.css" id="white">
 
     <title>login</title>
   </head>

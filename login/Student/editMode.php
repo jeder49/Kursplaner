@@ -111,7 +111,7 @@
             <td>
               <?php
                 $tid=$datensatz['TID'];
-                $sql3 = "SELECT date,topic FROM exam WHERE KID=$kid;";
+                $sql3 = "SELECT EID,date,topic FROM exam WHERE KID=$kid;";
                 $result3 = $connection->query($sql3);
                 if($result3!=false){
                   $i=1;
@@ -125,11 +125,11 @@
                     $datediff = $now - $exam_date;
 
                     if($datediff <= 3){
-                      echo '<div><p style="color:#ff0000;">'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'&id='.$id.'">delete</button></p>';
+                      echo '<div><p style="color:#ff0000;">'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&l='.$datensatz3['EID'].'&KID='.$kid.'&id='.$id.'">delete</button></p>';
                     }else if($datediff <= 7){
-                      echo '<div><p style="color:#FFB500;">'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'&id='.$id.'">delete</button></p>';
+                      echo '<div><p style="color:#FFB500;">'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&l='.$datensatz3['EID'].'&KID='.$kid.'&id='.$id.'">delete</button></p>';
                     }else{
-                      echo '<div><p>'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&id='.$i.'&KID='.$kid.'&id='.$id.'">delete</button></p>';
+                      echo '<div><p>'.$datensatz3['date'].'<button onclick=window.location.href="delete.php?table=exam&l='.$datensatz3['EID'].'&KID='.$kid.'&id='.$id.'">delete</button></p>';
                     }
                     echo $datensatz3['topic'].'</div>';
 
@@ -157,12 +157,12 @@
             <tr>
               <td>
                 <?php
-                  $sql4 = "SELECT discription FROM homework WHERE KID=$kid;";
+                  $sql4 = "SELECT HID,discription FROM homework WHERE KID=$kid;";
                   $result4 = $connection->query($sql4);
                   if($result4!=false){
                     $i=1;
                     while ($datensatz4 = $result4->fetch_assoc()) {
-                      echo $datensatz4['discription'].'<button onclick=window.location.href="delete.php?table=homework&i='.$i.'&KID='.$kid.'&id='.$id.'">delete</button>';
+                      echo $datensatz4['discription'].'<button onclick=window.location.href="delete.php?table=homework&l='.$datensatz4['HID'].'&KID='.$kid.'&id='.$id.'">delete</button></br>';
                       $i++;
                     }
                   }
@@ -188,7 +188,7 @@
                 $result5 = $connection->query($sql5);
                 if($result5!=false){
                   while ($datensatz5 = $result5->fetch_assoc()) {
-                    echo $datensatz5['nickname'].' AKA '.$datensatz5['username'].'<button onclick=window.location.href="delete.php?table=mates&id='.$datensatz3['UID'].'&KID='.$kid.'&id='.$id.'">delete</button></br>';
+                    echo $datensatz5['nickname'].' AKA '.$datensatz5['username'].'<button onclick=window.location.href="delete.php?table=mates&l='.$datensatz5['UID'].'&KID='.$kid.'&id='.$id.'">delete</button></br>';
                   }
                 }else{
                   echo '(DB error)It seams like you are alone in this class! Feel already lonely?';

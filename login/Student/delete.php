@@ -1,56 +1,49 @@
 <?php
+  //name of the table elements are deleted from
   $table = $_GET['table'];
-
+  //classid
   $kid = $_GET['KID'];
-
+  //userid
   $id = $_GET['id'];
+  //index of element
+  $i = $_GET['l'];
 
-  $i = $_GET['i'];
+  echo 'table: '.$table.'</br>';
+  echo 'kid: '.$kid.'</br>';
+  echo 'id: '.$id.'</br>';
+  echo 'i: '.$i.'</br>';
 
   //creates connection to database
   $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
 
-  if($table='homework'){
+  if($table=='homework'){
 
-    $sql= "UPDATE class SET homework = '' WHERE KID=$kid";
+    $sql= "DELETE FROM homework WHERE HID=$i";
 
     //gets the result of the DB for the sql comand
     $result = $connection->query($sql);
 
-    $sql1= "DELETE FROM homework WHERE HID=$i AND KID=$kid";
-
-    //gets the result of the DB for the sql comand
-    $result1 = $connection->query($sql1);
-
-    header('Location: /kursplaner/Student/editMode.php?id='.$id.'&kid='.$kid);
+    header('Location: /Kursplaner/login/Student/editMode.php?id='.$id.'&kid='.$kid);
   }
 
-  elseif ($table='exam') {
+  elseif ($table=='exam') {
 
-    $sql="SELECT EID FROM exam WHERE KID=$kid";
-
-    //gets the result of the DB for the sql comand
-    $result = $connection->query($sql1);
-
-    $datensatz = $result->fetch_assoc();
-
-    for($f=0;$f==$i+1;$f++){
-      if($f==$i){
-        $sql1="DELETE FROM exam WHERE EID=".$datensatz['EID'];
-      }
-    }
+    $sql="DELETE FROM exam WHERE EID=$i";
 
     //gets the result of the DB for the sql comand
-    $result = $connection->query($sql1);
-    header('Location: /kursplaner/Student/editMode.php?id='.$id.'&kid='.$kid);
+    $result = $connection->query($sql);
+
+    //
+    header('Location: /Kursplaner/login/Student/editMode.php?id='.$id.'&kid='.$kid);
   }
 
-  elseif ($table='mates') {
+  elseif ($table=='mates') {
 
     $sql="DELETE FROM take WHERE UID=$i AND KID=$kid";
 
     //gets the result of the DB for the sql comand
     $result = $connection->query($sql);
-    header('Location: /kursplaner/Student/editMode.php?id='.$id.'&kid='.$kid);
+    header('Location: /Kursplaner/login/Student/editMode.php?id='.$id.'&kid='.$kid);
   }
+  $connection->close();
 ?>
