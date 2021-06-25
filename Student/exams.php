@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
 
     <!--
-      <link rel="stylesheet" href="classes_style_dark.css">
-      <link rel="stylesheet" href="classes_style_white.css">
-    -->
+      <link rel="stylesheet" href="classes_style_dark.css">-->
+      <link rel="stylesheet" href="exams_style_white.css">
     <title>exams</title>
   </head>
   <body>
@@ -25,22 +24,24 @@
             </div>
           </a>
         </div>
+      </nav>
       <center>
         <h1>
-          exams:
+          EXAMS:
         </h1>
       </center>
-      </nav>
     </header>
 
     <div id="side-menu" class="side-nav">
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
-			<a>Menu</a>
       <?php
         $id= $_GET['id'];
-			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
-        echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
-        echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
+        $type= $_GET['type'];
+        echo "<a  class='hover' href='startStudent.php?type=$type&id=$id'>Menu</a>";
+			  echo "<a  class='hover' href='exams.php?type=$type&id=$id'>exams</a>";
+        echo "<a  class='hover' href='classes.php?type=$type&id=$id'>classes</a>";
+        echo "<a  class='hover' href='setting.php?type=$type&id=$id'>settings</a>";
+        echo "<a  class='hover' href='../login/login.php'>log out</a>";
       ?>
     </div>
 
@@ -67,7 +68,7 @@
               $datensatz1 = $result1->fetch_assoc();
 
               //prints out the
-              echo "<tr><th><a href=class.php?id=".$datensatz['EID'].">".$datensatz1['subject']."</a></br>".$datensatz['token']."</th></tr>";
+              echo "<tr><th><a href=class.php?id=".$datensatz['EID'].">".$datensatz1['subject']."</a></br>".$datensatz['date']."</th></tr>";
 
             }
             $connection->close();
@@ -75,6 +76,15 @@
         </table>
       </center>
     </div>
-
+    <script>
+			function openSlideMenu(){
+				document.getElementById('side-menu').style.width= '250px';
+				document.getElementById('side-menu').style.marginLeft= '0';
+			  }
+        function closeSlideMenu(){
+        document.getElementById('side-menu').style.width= '0';
+        document.getElementById('side-menu').style.marginLeft= '0';
+        }
+    </script>
   </body>
 </html>

@@ -20,7 +20,6 @@
         include 'login.php';
       }
       */
-      $type = $_GET['type'];
     ?>
     <nav class= "navbar">
       <div class="A">
@@ -43,12 +42,14 @@
 
     <div id="side-menu" class="side-nav">
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
-			<a>Menu</a>
       <?php
         $id= $_GET['id'];
-			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
-        echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
-        echo "<a  class='hover' href='setting.php?id=$id'>settings</a>";
+        $type= $_GET['type'];
+        echo "<a  class='hover' href='startStudent.php?type=$type&id=$id'>Menu</a>";
+			  echo "<a  class='hover' href='exams.php?type=$type&id=$id'>exams</a>";
+        echo "<a  class='hover' href='classes.php?type=$type&id=$id'>classes</a>";
+        echo "<a  class='hover' href='setting.php?type=$type&id=$id'>settings</a>";
+        echo "<a  class='hover' href='../login/login.php'>log out</a>";
       ?>
     </div>
 
@@ -100,7 +101,7 @@
 
             function load($day,$type) {
               //userid
-              $id = 2;//$_COOKIE['id'];
+              $id= $_GET['id'];
 
               //creates connection to database
               $connection = new mysqli('localhost', 'root', '', 'kursplaner');
