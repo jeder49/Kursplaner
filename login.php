@@ -158,7 +158,7 @@
                     //if username and password fit it returns true
                     if($datensatz["username"] == $username && $datensatz["password"] == $password){
                       //is admin or not?
-                      setcookie('id',$datensatz['UID']);
+                      setcookie('id',$datensatz['UID'],time()+ 60 * 60 * 24 * 30,'/',null);
                       $id = $datensatz['UID'];
                       checkRights($id,$connection);
                     }

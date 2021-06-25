@@ -15,7 +15,7 @@
         $kid = $_GET["kid"];
 
         //get data about the class
-        $sql = "SELECT token,homework,TID,subject FROM class WHERE KID=$kid;";
+        $sql = "SELECT token,TID,subject FROM class WHERE KID=$kid;";
 
         //creates connection to database
         $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -32,20 +32,20 @@
   </head>
   <body>
     <header>
-
+      <nav class= "navbar">
+        <div class="A">
+          <a onclick="openSlideMenu()">
+            <div class="side open-slide">
+              <div class="b"></div>
+              <div class="b"></div>
+              <div class="b"></div>
+            </div>
+          </a>
+        </div>
+      </nav>
 
       <center>
-        <nav class= "navbar">
-          <div class="A">
-            <a onclick="openSlideMenu()">
-              <div class="side open-slide">
-                <div class="b"></div>
-                <div class="b"></div>
-                <div class="b"></div>
-              </div>
-            </a>
-          </div>
-        </nav>
+
         <h1>
 
           <!--makes contact to the DB and prints out subjectname-->
@@ -151,11 +151,9 @@
             <tr>
               <td>
                 <?php
-                  $hid=$datensatz['homework'];
-                  $sql4 = "SELECT discription FROM homework WHERE HID=$hid;";
+                  $sql4 = "SELECT discription FROM homework WHERE KID=$kid;";
                   $result4 = $connection->query($sql4);
                   if($result4!=false){
-
                     while ($datensatz4 = $result4->fetch_assoc()) {
                       echo $datensatz4['discription'];
                     }
