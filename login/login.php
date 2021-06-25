@@ -231,7 +231,7 @@
               }
             }
           ?>
-          <p><a href="getUser.php">forgot password?</a></p>
+          <p><a href="getUser.php?i=0">forgot password?</a></p>
       </div>
     </center>
   </body>

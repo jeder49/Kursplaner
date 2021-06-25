@@ -9,7 +9,7 @@
     -->
     <title>
       <?php
-        $i=0;
+        $i=$_GET['i'];
         if($i==0){
           echo 'getUser';
         }elseif ($i==1) {
@@ -32,7 +32,7 @@
       <input type="submit"/>
       <?php
         if(array_key_exists('login', $_POST)) {
-          sent();
+          doit();
         }
         function randomNum(){
           $n = rand(0,9);
@@ -42,24 +42,30 @@
           return $n;
         }
         $code = randomNum();
-        function sent(){
-          /*$sql = "SELECT email FROM user WHERE username = $input OR email = $input;";
+        function doit(){
 
-          //creates connection to database
-          $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+          if($i=0){
+            $sql = "SELECT UID,email FROM user WHERE username = $input OR email = $input;";
 
-          //gets the result of the DB for the sql comand
-          $result = $connection->query($sql);
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
 
-          //if DB returns false it error message is printed
-          if($result != false){
-            //if some one has the idea to enter a username as email
-            while ($datensatz = $result->fetch_assoc()) {
-              $to = $datensatz['email'];
-              $message = "Hallo, Haben sie versucht ";
-              mail( $to, 'password', message);
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //if DB returns false it error message is printed
+            if($result != false){
+              //if some one has the idea to enter a username as email
+              while ($datensatz = $result->fetch_assoc()) {
+                $to = $datensatz['email'];
+                $message = "Hallo, Haben sie versucht ";
+                mail( $to, 'password', message);
+              }
             }
-          }*/
+            header('Location: /Kursplaner/login/getUser.php?i=1&id='.$datensatz['UID']);
+          }elseif ($i=1) {
+            header('Location: /Kursplaner/login/reset.php?id=');
+          }
         }
       ?>
     </form>

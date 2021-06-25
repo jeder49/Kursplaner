@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2021 at 01:24 AM
+-- Generation Time: Jun 25, 2021 at 11:57 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -89,20 +89,20 @@ INSERT INTO `appointment` (`AID`, `day`, `timeslot`) VALUES
 CREATE TABLE `class` (
   `KID` int(11) NOT NULL,
   `token` varchar(11) NOT NULL,
-  `homework` int(11) NOT NULL,
   `lk` tinyint(1) NOT NULL,
   `TID` int(11) NOT NULL,
-  `subject` varchar(15) NOT NULL
+  `subject` varchar(15) NOT NULL,
+  `colour` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`KID`, `token`, `homework`, `lk`, `TID`, `subject`) VALUES
-(1, 'LKG01', 1, 1, 4, 'Geschichte'),
-(2, 'GKE01', 0, 0, 4, 'English'),
-(3, 'LKM01', 0, 1, 5, 'Mathe');
+INSERT INTO `class` (`KID`, `token`, `lk`, `TID`, `subject`, `colour`) VALUES
+(1, 'LKG01', 1, 4, 'Geschichte', '#DB8914'),
+(2, 'GKE01', 0, 4, 'English', '#19C556'),
+(3, 'LKM01', 1, 5, 'Mathe', '#1953C5');
 
 -- --------------------------------------------------------
 
@@ -163,8 +163,8 @@ CREATE TABLE `take` (
 
 INSERT INTO `take` (`KID`, `UID`) VALUES
 (1, 2),
-(1, 3),
 (2, 2),
+(2, 3),
 (2, 5),
 (3, 5);
 
