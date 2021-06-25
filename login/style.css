@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+}
+input{
+    background-color: rgb(109, 146, 194);
+    color: rgb(250, 240, 250);
+    border: none;
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+    height: 50px;
+    width: 300px;}
+}
+#element{
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+#container{
+  position:absolute;
+  top:25%;
+  left:45%;
+}

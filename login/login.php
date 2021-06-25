@@ -5,13 +5,13 @@
 
     <!--style of the html file
     <link rel="stylesheet" href="login_style_dark.css">-->
-    <link rel="stylesheet" href="login_style_white.css" id="white">
+    <link rel="stylesheet" href="style.css" id="white">
 
     <title>login</title>
   </head>
   <body>
     <center>
-      <div>
+      <div id="container">
 
         <?php
           if(array_key_exists('login', $_POST)) {
@@ -19,13 +19,15 @@
           }
         ?>
 
+      <img src="res/logo.png" alt="logo" width="300" height="300">
+
       <form method="post">
 
         <!--gets username by the user-->
-        <input type="text" id = "username" placeholder="username"><br/>
+        <input id = "element" type="text" id = "username" placeholder="username"><br/>
 
         <!--gets password by the user-->
-        <input type="password" id = "password" placeholder="password"><br/>
+        <input id = "element" type="password" id = "password" placeholder="password"><br/>
 
         <!--checkbox if user should stay recogised
         <input type="checkbox" id="cookie">
@@ -33,7 +35,7 @@
         -->
 
         <!--button to submit the username and password-->
-        <input type="submit" onclick="doHashThing()" value="lets go!" name="login"/><br/>
+        <input id = "element" type="submit" onclick="doHashThing()" value="lets go!" name="login"/><br/>
       </form>
 
         <script>

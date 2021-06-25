@@ -54,49 +54,64 @@
 
     <div id="main">
 			<div id="montag" class="stundenplan" href="#">
-				<h1>Stundenplan Montag</h1>
+				<?php
+          function title($day){
+            switch ($day) {
+              case '1':
+                echo "<h1>Plan for Monday</h1>";
+                break;
+              case '2':
+                echo "<h1>Plan for Tuesday</h1>";
+                break;
+              case '3':
+                echo "<h1>Plan for Wednesday</h1>";
+                break;
+              case '4':
+                echo "<h1>Plan for Thursday</h1>";
+                break;
+              case '5':
+                echo "<h1>Plan for Friday</h1>";
+                break;
+              default:
+                echo "<h1>sorry some thing went wrong!</h1>";
+                break;
+            }
+          }
+        ?>
+        </br>
 				<div>
         <table>
           <?php
             if(array_key_exists('Mon', $_POST)) {
               echo '<script>openMonday();</script>';
-              button1();
+              load(1);
+              title(1);
             }
             else if(array_key_exists('Tue', $_POST)) {
               echo '<script>openTuesday();</script>';
-              button2();
+              load(2);
+              title(2);
             }
             else if(array_key_exists('Wed', $_POST)) {
               echo '<script>openWednesday();</script>';
-              button3();
+              load(3);
+              title(3);
             }
             else if(array_key_exists('Thur', $_POST)) {
               echo '<script>openThursday();</script>';
-              button4();
+              load(4);
+              title(4);
             }
             else if(array_key_exists('Fri', $_POST)) {
               echo '<script>openFriday();</script>';
-              button5();
+              load(5);
+              title(5);
             }
             else{
               load(date("N"));
+              title(date("N"));
             }
 
-            function button1() {
-              load(1);
-            }
-            function button2() {
-              load(2);
-            }
-            function button3() {
-              load(3);
-            }
-            function button4() {
-              load(4);
-            }
-            function button5() {
-              load(5);
-            }
 
             function load($day) {
               //userid
