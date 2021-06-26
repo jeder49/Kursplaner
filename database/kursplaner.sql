@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2021 at 11:57 PM
+-- Generation Time: Jun 26, 2021 at 12:13 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -142,7 +142,6 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`UID`) VALUES
 (2),
 (3),
-(5),
 (6),
 (7);
 
@@ -165,8 +164,8 @@ INSERT INTO `take` (`KID`, `UID`) VALUES
 (1, 2),
 (2, 2),
 (2, 3),
-(2, 5),
-(3, 5);
+(2, 7),
+(3, 7);
 
 -- --------------------------------------------------------
 
@@ -345,12 +344,6 @@ ALTER TABLE `class`
 --
 ALTER TABLE `exam`
   ADD CONSTRAINT `class_exam` FOREIGN KEY (`KID`) REFERENCES `class` (`KID`);
-
---
--- Constraints for table `student`
---
-ALTER TABLE `student`
-  ADD CONSTRAINT `user_student` FOREIGN KEY (`UID`) REFERENCES `user` (`UID`);
 
 --
 -- Constraints for table `take`
