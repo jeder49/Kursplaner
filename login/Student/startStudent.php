@@ -1,4 +1,93 @@
 <html>
+  <?php
+    if(isset($_COOKIE['id'])){
+
+      //get user id from cookie
+      $id = $_COOKIE['id'];
+
+      //get user ip so that permision is granted to the right pc
+      $ip = $_SERVER['REMOTE_ADDR'];
+
+      //gets all token with the owner with the id
+      $sql0 = "SELECT ToID,IP,dateTime FROM online natural join token WHERE UID = $id;";
+
+      //creates connection to database
+      $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+      //get result of sql comand
+      $result0 = $connection->query($sql0);
+
+      //if the commant produces no mistake
+      if($result0!=false){
+
+        //looks if one of the token is over time and if yes it delets it
+        while ($datensatz0 = $result0->fetch_assoc()) {
+
+          //get datetime
+          $date = date('m/d/Y h:i:s a', time());
+
+          // TODO: does not work!
+          //if the date of the token is in the past
+          if($datensatz0['dateTime'] < $date){
+              //delets all entries in online that have a out of time token
+              $sql01 = 'DELETE FROM online WHERE ToID ='.$datensatz0['ToID'].';';
+
+              //sents sql comant to database
+              $connection->query($sql01);
+
+              //delets all entries in online that have a out of time token
+              $sql02 = 'DELETE FROM token WHERE ToID ='.$datensatz0['ToID'].';';
+
+              //sents sql comant to database
+              $connection->query($sql02);
+          }
+
+        }
+
+      }else{
+
+        //sent you to hell
+        header('Location: /Kursplaner/login/MagicWord.html');
+
+      }
+
+      //looks if there is token with the ip
+      $sql0 = "SELECT ToID,count(UID) FROM online as o natural join (SELECT ToID FROM token WHERE IP = '$ip') as t WHERE UID = $id;";
+
+      //get result of sql comand
+      $result0 = $connection->query($sql0);
+
+      //stors the number of
+      $datensatz0 = $result0->fetch_assoc();
+
+      //if there are no token for this pc and user combination
+      if($datensatz0['count(UID)'] == 0){
+
+        //close conection to Database
+        $connection->close();
+
+        //sent you to hell
+        header('Location: /Kursplaner/login/MagicWord.html');
+
+      }else{
+
+        // change "looksAt" attribut in "token" to token of class
+        $sql04 = 'UPDATE token SET looksAt= "home" WHERE ToID ='.$datensatz0['ToID'].';';
+
+        //sents sql comant to database
+        $connection->query($sql04);
+
+        //close conection to Database
+        $connection->close();
+
+      }
+    }else {
+
+      //sent you to hell
+      header('Location: /Kursplaner/login/MagicWord.html');
+
+    }
+  ?>
   <head>
     <!--definds -->
     <meta charset="UTF-8">
@@ -9,18 +98,6 @@
   </head>
 
   <body>
-    <!--if user is not registerd he gets back to login.php & get date-->
-    <?php
-      //setcookie('name','wert'(var),'Existensberechtigung'(int))
-      /*
-      if(!isset($_COOKIE['login'])){                           //möglicher Fehler
-        if (isset($_COOKIE['typ']) {
-          setcookie("typ", "", time() - 3600);
-        }
-        include 'login.php';
-      }
-      */
-    ?>
     <nav class= "navbar">
       <div class="A">
         <a onclick="openSlideMenu()">
@@ -43,13 +120,48 @@
     <div id="side-menu" class="side-nav">
 			<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
       <?php
-        $id= $_GET['id'];
+      function logout (){
+          //get user id from cookie
+          $id = $_COOKIE['id'];
+
+          //get user ip so that permision is granted to the right pc
+          $ip = $_SERVER['REMOTE_ADDR'];
+
+          //creates connection to database
+          $connection = new mysqli('localhost', 'root', '', 'kursplaner');
+
+          //looks if there is token with the ip
+          $sql0 = "SELECT ToID FROM online as o natural join (SELECT ToID FROM token WHERE IP = '$ip') as t WHERE UID = $id;";
+
+          //get result of sql comand
+          $result0 = $connection->query($sql0);
+
+          //stors the number of
+          $datensatz0 = $result0->fetch_assoc();
+
+          //delets all entries in "online" that have a out of time token
+          $sql05 = 'DELETE FROM online WHERE ToID ='.$datensatz0['ToID'].';';
+
+          //sents sql comant to database
+          $connection->query($sql05);
+
+          //delets all entries in "online" that have a out of time token
+          $sql06 = 'DELETE FROM token WHERE ToID ='.$datensatz0['ToID'].';';
+
+          //sents sql comant to database
+          $connection->query($sql06);
+
+          //close conection to Database
+          $connection->close();
+        }
         echo "<a  class='hover' href='startStudent.php?id=$id'>Menu</a>";
 			  echo "<a  class='hover' href='exams.php?id=$id'>exams</a>";
         echo "<a  class='hover' href='classes.php?id=$id'>classes</a>";
         echo "<a  class='hover' href='setting.php?&id=$id'>settings</a>";
-        echo "<a  class='hover' href='../login.php'>log out</a>";
       ?>
+      <form method="post">
+        <input type="submit" name="logout" class='hover' value="log out" />
+      </form>
     </div>
 
     <div id="main">
@@ -58,10 +170,10 @@
           function title($day){
             switch ($day) {
               case '1':
-                echo "<h1>Plan for Monday</h1>";
+                echo "<h1>Plan for Monday</h1></br>";
                 break;
               case '2':
-                echo "<h1>Plan for Tuesday</h1>";
+                echo "<h1>Plan for Tuesday</h1></br>";
                 break;
               case '3':
                 echo "<h1>Plan for Wednesday</h1>";
@@ -71,6 +183,12 @@
                 break;
               case '5':
                 echo "<h1>Plan for Friday</h1>";
+                break;
+              case '6':
+                echo "<h1>Plan for Monday</h1>";
+                break;
+              case '7':
+                echo "<h1>Plan for Monday</h1>";
                 break;
               default:
                 echo "<h1>sorry some thing went wrong!</h1>";
@@ -82,6 +200,10 @@
 				<div>
         <table>
           <?php
+            if(array_key_exists('logout', $_POST)) {
+              logout();
+              header('Location: /Kursplaner/login/login.php');
+            }
             if(array_key_exists('Mon', $_POST)) {
               echo '<script>openMonday();</script>';
               load(1);
@@ -116,6 +238,10 @@
             function load($day) {
               //userid
               $id= $_GET['id'];
+
+              if($day > 5){
+                $day = 1;
+              }
 
               //creates connection to database
               $connection = new mysqli('localhost', 'root', '', 'kursplaner');

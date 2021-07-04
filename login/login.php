@@ -24,10 +24,10 @@
       <form method="post">
 
         <!--gets username by the user-->
-        <input id = "element" type="text" id = "username" placeholder="username"><br/>
+        <input type="text" id = "username" placeholder="username"><br/>
 
         <!--gets password by the user-->
-        <input id = "element" type="password" id = "password" placeholder="password"><br/>
+        <input type="password" id = "password" placeholder="password"><br/>
 
         <!--checkbox if user should stay recogised
         <input type="checkbox" id="cookie">
@@ -118,16 +118,18 @@
               //password as hash
               var password = createHash(passwordIn);
 
+              // TODO: without cookies
+
               //creates cookie so the webside (CookiePower!)
               document.cookie = "username="+user;
 
               document.cookie = "password="+password;
           }
         </script>
-          <?php
+        <?php
 
-            $username = "";
-            //
+          $username = "";
+          //
           function login(){
             if(isset($_COOKIE['username'])){
               $username = $_COOKIE['username'];
@@ -155,18 +157,31 @@
                 //runs throught the array
                 while ($datensatz = $result->fetch_assoc()) {
 
-                    //echo " user: ".$datensatz["Benutzername"].";"." password: ".$datensatz["Passwort"].";";
+                  //echo " user: ".$datensatz["Benutzername"].";"." password: ".$datensatz["Passwort"].";";
 
-                    //if username and password fit it returns true
-                    if($datensatz["username"] == $username && $datensatz["password"] == $password){
-                      //is admin or not?
-                      setcookie('id',$datensatz['UID'],time()+ 60 * 60 * 24 * 30,'/',null);
-                      $id = $datensatz['UID'];
-                      checkRights($id,$connection);
-                    }
+                  //if username and password fit it returns true
+                  if($datensatz["username"] == $username && $datensatz["password"] == $password){
 
+                    // TODO:
+                    //creates cookie with uid
+                    //!if possible with out time limit!
+                    setcookie('id',$datensatz['UID'],time()+ 60 * 60 * 24 * 30,'/',null);
+
+                    $id = $datensatz['UID'];
+
+                    //creates token in database
+
+                    //get user ip
+                    //$ip = $_SERVER['REMOTE_ADDR'];
+                    //sql0 is used for securety
+                    //$sql0 =
+
+                    //looks which typ of user the person is (e.g.:admin,sutdent representative,teacher)
+                    checkRights($id,$connection);
                   }
-                  echo "Password or Username is wrong but who could tell which of them ;)";
+
+                }
+                echo "Password or Username is wrong but who could tell which of them ;)";
               }
               //disconnect from database
               $connection->close();
@@ -177,61 +192,67 @@
           }
 
 
-            function checkRights($id,$connection){
-              //looks if user is admin, teacher, student or students representitive
-              $sql1 = "SELECT count(UID) FROM represent WHERE UID=$id;";
-              $sql2 = "SELECT count(UID) FROM teacher WHERE UID=$id;";
-              $sql3 = "SELECT count(UID) FROM admin WHERE UID=$id;";
+          function checkRights($id,$connection){
+            //looks if user is admin, teacher, student or students representitive
+            $sql1 = "SELECT count(UID) FROM represent WHERE UID=$id;";
+            $sql2 = "SELECT count(UID) FROM teacher WHERE UID=$id;";
+            $sql3 = "SELECT count(UID) FROM admin WHERE UID=$id;";
 
-              //gets the result of the DB for the sql comand
-              $result1 = $connection->query($sql1);
-              $result2 = $connection->query($sql2);
-              $result3 = $connection->query($sql3);
+            //gets the result of the DB for the sql comand
+            $result1 = $connection->query($sql1);
+            $result2 = $connection->query($sql2);
+            $result3 = $connection->query($sql3);
 
 
-              if($result1 != false ){
-                $datensatz1 = $result1->fetch_assoc();
-              }
-              if($result2 != false){
-                $datensatz2 = $result2->fetch_assoc();
-              }
-              if($result3 != false ){
-                $datensatz3 = $result3->fetch_assoc();
-              }
-              //if the user is to find in the in the class tabel a student representetive
-
-              if ($datensatz1['count(UID)']!=0) {
-                //cookie to save type of user
-                //setcookie('typ','student representetive');
-                //
-                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
-              }
-
-              //if the user is to find in the in the teacher tabel
-              else if ($datensatz2['count(UID)']!=0) {
-                //cookie to save type of user
-                //setcookie('typ','teacher');
-                //
-                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
-              }
-
-              //if the user is to find in the in the admin tabel
-              else if ($datensatz3['count(UID)']!=0) {
-                //cookie to save type of user
-                setcookie('typ','admin');
-                //
-                header('Location: /Kursplaner/login/admin/startAdmin.html');
-              }
-              //if the user is to find in the in any tabel
-              else{
-                //cookie to save type of user
-                //setcookie('typ','student');
-                //
-                header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
-              }
+            if($result1 != false ){
+              $datensatz1 = $result1->fetch_assoc();
             }
-          ?>
-          <p><a href="getUser.php?i=0">forgot password?</a></p>
+            if($result2 != false){
+              $datensatz2 = $result2->fetch_assoc();
+            }
+            if($result3 != false ){
+              $datensatz3 = $result3->fetch_assoc();
+            }
+
+            //if the user is to find in the in the class tabel a student representetive
+
+            if ($datensatz1['count(UID)']!=0) {
+              //cookie to save type of user
+              //setcookie('typ','student representetive');
+              //
+              echo '<script>console.log("Your stuff here0")</script>';
+              header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
+            }
+
+            //if the user is to find in the in the teacher tabel
+            else if ($datensatz2['count(UID)']!=0) {
+              //cookie to save type of user
+              //setcookie('typ','teacher');
+              //
+              echo '<script>console.log("Your stuff here1")</script>';
+              header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
+            }
+
+            //if the user is to find in the in the admin tabel
+            else if ($datensatz3['count(UID)']!=0) {
+              //cookie to save type of user
+              setcookie('typ','admin');
+              //
+              echo '<script>console.log("Your stuff here2")</script>';
+              header('Location: /Kursplaner/login/admin/startAdmin.html');
+            }
+
+            //if the user is to find in the in any tabel
+            else{
+              //cookie to save type of user
+              //setcookie('typ','student');
+              //
+              echo '<script>console.log("Your stuff here3")</script>';
+              header('Location: /Kursplaner/login/Student/startStudent.php?id='.$id);
+            }
+          }
+        ?>
+        <p><a href="getUser.php?i=0">forgot password?</a></p>
       </div>
     </center>
   </body>
