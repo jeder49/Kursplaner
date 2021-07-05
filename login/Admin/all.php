@@ -24,7 +24,7 @@
         while ($datensatz0 = $result0->fetch_assoc()) {
 
           //get datetime
-          $date = date('m/d/Y h:i:s a', time());
+          $date = date('Y-m-d h:i:s', time());
 
           // TODO: does not work!
           //if the date of the token is in the past
@@ -72,7 +72,7 @@
       }else{
 
         // change "looksAt" attribut in "token" to token of class
-        $sql04 = 'UPDATE token SET looksAt= "settings" WHERE ToID ='.$datensatz0['ToID'].';';
+        $sql04 = 'UPDATE token SET looksAt= "all" WHERE ToID ='.$datensatz0['ToID'].';';
 
         //sents sql comant to database
         $connection->query($sql04);
@@ -129,7 +129,7 @@
       //sents sql comant to database
       $connection->query($sql06);
 
-      //close conection to Database
+      //closes conection to Database
       $connection->close();
     }
 
@@ -161,33 +161,201 @@
     <div>
 
       <div>
-        User:</br>
-        <?php
-          //sql command to get the username and password of the user
-          $sql = "SELECT UID,username,password FROM user WHERE username='$username';";
+        <h2>User:</h2>
+        <table>
+          <tr>
+            <th>UID</th>
+            <th>email</th>
+            <th>nickname</th>
+            <th>username</th>
+            <th>password</th>
+          </tr>
 
-          //creates connection to database
-          $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+          <?php
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM user;";
 
-          //gets the result of the DB for the sql comand
-          $result = $connection->query($sql);
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
 
-          //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
 
-          //if DB returns false it error message is printed
-          if($result==false){
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
 
-            echo "error 01: [login.php]: database returns false: ".$sql;
-
-          }
-          else{
-
-            //runs throught the array
-            while ($datensatz = $result->fetch_assoc()) {
+              echo "error 01: [login.php]: database returns false: ".$sql;
 
             }
-          }
-        ?>
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                  //get information of the user
+                  $uid = $datensatz['UID'];
+                  $email = $datensatz['email'];
+                  $nickname = $datensatz['nickname'];
+                  $username = $datensatz['username'];
+                  $password = $datensatz['password'];
+
+                  //prints the information in the table
+                  echo "<tr><td>$uid</td><td>$email</td><td>$nickname</td><td>$username</td><td>$password</td></tr>";
+
+              }
+
+            }
+
+            //closes conection to Database
+            $connection->close();
+          ?>
+        </table>
+
+        <h2>Class:</h2>
+        <table>
+          <tr>
+            <th>KID</th>
+            <th>token</th>
+            <th>lk</th>
+            <th>TID</th>
+            <th>subject</th>
+          </tr>
+
+          <?php
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM class;";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                  //get information of the user
+                  $KID = $datensatz['KID'];
+                  $token = $datensatz['token'];
+                  $lk = $datensatz['lk'];
+                  $TID = $datensatz['TID'];
+                  $subject = $datensatz['subject'];
+
+                  //prints the information in the table
+                  echo "<tr><td>$KID</td><td>$token</td><td>$lk</td><td>$TID</td><td>$subject</td></tr>";
+
+              }
+
+            }
+
+            //closes conection to Database
+            $connection->close();
+          ?>
+        </table>
+
+        <h2>Exam:</h2>
+        <table>
+          <tr>
+            <th>KID</th>
+            <th>date</th>
+            <th>topic</th>
+            <th>EID</th>
+          </tr>
+
+          <?php
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM exam;";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                  //get information of the user
+                  $KID = $datensatz['KID'];
+                  $date = $datensatz['date'];
+                  $topic = $datensatz['topic'];
+                  $EID = $datensatz['EID'];
+
+                  //prints the information in the table
+                  echo "<tr><td>$KID</td><td>$date</td><td>$topic</td><td>$EID</td></tr>";
+
+              }
+
+            }
+
+            //closes conection to Database
+            $connection->close();
+          ?>
+        </table>
+
+        <h2>Appointments:</h2>
+        <table>
+          <tr>
+            <th>KID</th>
+            <th>date</th>
+            <th>topic</th>
+            <th>EID</th>
+          </tr>
+
+          <?php
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM exam;";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                  //get information of the user
+                  $KID = $datensatz['KID'];
+                  $date = $datensatz['date'];
+                  $topic = $datensatz['topic'];
+                  $EID = $datensatz['EID'];
+
+                  //prints the information in the table
+                  echo "<tr><td>$KID</td><td>$date</td><td>$topic</td><td>$EID</td></tr>";
+
+              }
+
+            }
+
+            //closes conection to Database
+            $connection->close();
+          ?>
+        </table>
       </div>
 
 

@@ -316,9 +316,14 @@
           }else{
             $password="";
           }
-          $email = $_POST['email'];
-          $id = $_GET['id'];
 
+          //get email
+          $email = $_POST['email'];
+
+          //get id
+          $id = $_COOKIE['id'];
+
+          //sql command divied into diferent parts to look what is to change
           $sql = "UPDATE user SET";
           if($_POST['name']!=""){
             $sql = $sql." username = $name";
@@ -331,12 +336,22 @@
           }
           $sql = $sql." WHERE UID = $id";
 
+          //sents sql command to database
           $connection->query($sql);
+
+          //closes conection to database
           $connection->close();
+
           if(isset($_POST['theme'])){
+
+            //creates a cookie theme how should be used to choose between light or dark mode
             setcookie('theme','dark');
+
           } else{
+
+            //creates a cookie theme how should be used to choose between light or dark mode
             setcookie('theme','white',time()+ 60 * 60 * 24 * 30,'../');
+
           }
         }
         //$connection->close();

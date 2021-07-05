@@ -24,7 +24,7 @@
         while ($datensatz0 = $result0->fetch_assoc()) {
 
           //get datetime
-          $date = date('m/d/Y h:i:s a', time());
+          $date = date('Y-m-d h:i:s', time());
 
           // TODO: does not work!
           //if the date of the token is in the past
@@ -72,7 +72,7 @@
       }else{
 
         // change "looksAt" attribut in "token" to token of class
-        $sql04 = 'UPDATE token SET looksAt= "settings" WHERE ToID ='.$datensatz0['ToID'].';';
+        $sql04 = 'UPDATE token SET looksAt = "entries" WHERE ToID ='.$datensatz0['ToID'].';';
 
         //sents sql comant to database
         $connection->query($sql04);
@@ -166,10 +166,16 @@
         <!---->
         <input name = "searchTerm" placeholder="term"><br/>
 
-        <!---->
-        <input type="submit"></input>
+        <!--submit button-->
+        <input name="searching" type = "submit"></input>
 
       </form>
+      <?php
+        if(array_key_exists('searching', $_POST)) {
+          $term = $_POST['searchTerm'];
+          header("Location: /Kursplaner/login/Admin/entries.php?term=$term");
+        }
+      ?>
     </header>
     <div>
 
@@ -177,8 +183,11 @@
         Student:
         <ul>
           <?php
+            $term = $_GET['term'];
+
             //sql command to get the username and password of the user
-            $sql = "SELECT UID,username,password FROM user WHERE username='$username';";
+            $sql = "SELECT * FROM user as u natural join (SELECT s.UID FROM student as s left join (SELECT UID FROM represent)as sr on s.UID=sr.UID WHERE sr.UID is NULL) as combi";
+            $sql = $sql." WHERE username LIKE '%$term%' or UID LIKE '%$term%' or email LIKE '%$term%' or nickname LIKE '%$term%';";
 
             //creates connection to database
             $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
@@ -187,8 +196,6 @@
             $result = $connection->query($sql);
 
             //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
-
-            //if DB returns false it error message is printed
             if($result==false){
 
               echo "error 01: [login.php]: database returns false: ".$sql;
@@ -199,6 +206,14 @@
               //runs throught the array
               while ($datensatz = $result->fetch_assoc()) {
 
+                //get information of the user
+                $uid = $datensatz['UID'];
+                $email = $datensatz['email'];
+                $nickname = $datensatz['nickname'];
+                $username = $datensatz['username'];
+
+                //prints the information
+                echo "<li><b>UID:</b> $uid   <b>email:</b> $email   <b>nickname:</b> $nickname   <b>username:</b> $username <a href='profil.php?id=$uid'>more</a></li>";
               }
             }
           ?>
@@ -209,7 +224,38 @@
         Student representitive:
         <ul>
           <?php
-            echo '<div color=#df1c44>'.$term.'</div>';
+            $term = $_GET['term'];
+
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM user as u natural join (SELECT UID FROM represent) as combi WHERE username LIKE '%$term%' or UID LIKE '%$term%' or email LIKE '%$term%' or nickname LIKE '%$term%';";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $uid = $datensatz['UID'];
+                $email = $datensatz['email'];
+                $nickname = $datensatz['nickname'];
+                $username = $datensatz['username'];
+
+                //prints the information
+                echo "<li></b>UID:</b> $uid   <b>email:</b> $email   <b>nickname:</b> $nickname   <b>username:</b> $username <a href='profil.php?id=$uid'>more</a></li>";
+              }
+            }
           ?>
         </ul>
       </div>
@@ -218,7 +264,39 @@
         Teacher:
         <ul>
           <?php
-            echo '<div color=#df1c44>'.$term.'</div>';
+            $term = $_GET['term'];
+
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM user as u natural join (SELECT UID,token FROM teacher) as combi WHERE username LIKE '%$term%' or UID LIKE '%$term%' or email LIKE '%$term%' or nickname LIKE '%$term%';";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $uid = $datensatz['UID'];
+                $email = $datensatz['email'];
+                $nickname = $datensatz['nickname'];
+                $username = $datensatz['username'];
+                $token = $datensatz['token'];
+
+                //prints the information
+                echo "<li><b>UID:</b> $uid   <b>email:</b> $email   <b>nickname:</b> $nickname   <b>username:</b> $username   <b>token:</b> $token  <a href='profil.php?id=$uid'>more</a></li>";
+              }
+            }
           ?>
         </ul>
       </div>
@@ -227,7 +305,38 @@
         Admin:
         <ul>
           <?php
-            echo '<div color=#df1c44>'.$term.'</div>';
+            $term = $_GET['term'];
+
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM user as u natural join (SELECT UID FROM admin) as combi WHERE username LIKE '%$term%' or UID LIKE '%$term%' or email LIKE '%$term%' or nickname LIKE '%$term%';";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $uid = $datensatz['UID'];
+                $email = $datensatz['email'];
+                $nickname = $datensatz['nickname'];
+                $username = $datensatz['username'];
+
+                //prints the information
+                echo "<li><b>UID:</b> $uid   <b>email:</b> $email   <b>nickname:</b> $nickname   <b>username:</b> $username <a href='profil.php?id=$uid'>more</a></li>";
+              }
+            }
           ?>
         </ul>
       </div>
@@ -236,7 +345,39 @@
         Class:
         <ul>
           <?php
-            echo '<div color=#df1c44>'.$term.'</div>';
+            $term = $_GET['term'];
+
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM class WHERE KID LIKE '%$term%' or token LIKE '%$term%' or lk LIKE '%$term%' or TID LIKE '%$term%' or subject LIKE '%$term%';";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $KID = $datensatz['KID'];
+                $token = $datensatz['token'];
+                $lk = $datensatz['lk'];
+                $TID = $datensatz['TID'];
+                $subject = $datensatz['subject'];
+
+                //prints the information
+                echo "<li><b>KID:</b> $KID   <b>token:</b> $token   <b>lk:</b> $lk   <b>TID:</b> $TID    <b>subject:</b>  $subject  <a href='profil.php?id=$uid'>more</a></li>";
+              }
+            }
           ?>
         </ul>
       </div>
@@ -245,7 +386,38 @@
         Exam:
         <ul>
           <?php
-            echo '<div color=#df1c44>'.$term.'</div>';
+            $term = $_GET['term'];
+
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM exam WHERE KID LIKE '%$term%' or date LIKE '%$term%' or topic LIKE '%$term%' or EID LIKE '%$term%';";
+
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
+
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
+
+              echo "error 01: [login.php]: database returns false: ".$sql;
+
+            }
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $KID = $datensatz['KID'];
+                $date = $datensatz['date'];
+                $topic = $datensatz['topic'];
+                $EID = $datensatz['EID'];
+
+                //prints the information
+                echo "<li><b>KID:</b> $KID   <b>date:</b> $date   <b>topic:</b> $topic   <b>EID:</b> $EID  <a href='profil.php?id=$uid'>more</a></li>";
+              }
+            }
           ?>
         </ul>
       </div>

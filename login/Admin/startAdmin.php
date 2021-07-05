@@ -24,7 +24,7 @@
         while ($datensatz0 = $result0->fetch_assoc()) {
 
           //get datetime
-          $date = date('m/d/Y h:i:s a', time());
+          $date = date('Y-m-d h:i:s', time());
 
           // TODO: does not work!
           //if the date of the token is in the past
@@ -72,7 +72,7 @@
       }else{
 
         // change "looksAt" attribut in "token" to token of class
-        $sql04 = 'UPDATE token SET looksAt= "settings" WHERE ToID ='.$datensatz0['ToID'].';';
+        $sql04 = 'UPDATE token SET looksAt= "home" WHERE ToID ='.$datensatz0['ToID'].';';
 
         //sents sql comant to database
         $connection->query($sql04);
@@ -158,14 +158,20 @@
         <input type="submit" name="logout" class='hover' value="log out" />
       </form>
     </header>
-    <form action="entries.php" method="post">
+    <form method="post">
 
       <!---->
-      <input name = "searchTerm" placeholder="term">
+      <input name = "searchTerm" placeholder = "term">
 
-      <!---->
-      <input type="submit"></input>
+      <!--submit button-->
+      <input name="searching" type = "submit"></input>
 
     </form>
+    <?php
+      if(array_key_exists('searching', $_POST)) {
+        $term = $_POST['searchTerm'];
+        header("Location: /Kursplaner/login/Admin/entries.php?term=$term");
+      }
+    ?>
   </body>
 </html>

@@ -24,7 +24,7 @@
         while ($datensatz0 = $result0->fetch_assoc()) {
 
           //get datetime
-          $date = date('m/d/Y h:i:s a', time());
+          $date = date('Y-m-d h:i:s', time());
 
           // TODO: does not work!
           //if the date of the token is in the past
@@ -72,7 +72,7 @@
       }else{
 
         // change "looksAt" attribut in "token" to token of class
-        $sql04 = 'UPDATE token SET looksAt= "settings" WHERE ToID ='.$datensatz0['ToID'].';';
+        $sql04 = 'UPDATE token SET looksAt= "online" WHERE ToID ='.$datensatz0['ToID'].';';
 
         //sents sql comant to database
         $connection->query($sql04);
@@ -161,36 +161,51 @@
     <div>
 
       <div>
-        User:</br>
-        <?php
-          //sql command to get the username and password of the user
-          $sql = "SELECT UID,username,password FROM user WHERE username='$username';";
+        <h2>online:</h2>
+        <table>
+          <tr>
+            <th>ToID</th>
+            <th>looksAt</th>
+            <th>dateTime</th>
+            <th>IP</th>
+            <th>UID</th>
+          </tr>
+          <?php
+            //sql command to get the username and password of the user
+            $sql = "SELECT * FROM token as t natural join (SELECT ToID,UID FROM online) as o;";
 
-          //creates connection to database
-          $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
+            //creates connection to database
+            $connection = new mysqli('localhost', 'root', '', 'Kursplaner');
 
-          //gets the result of the DB for the sql comand
-          $result = $connection->query($sql);
+            //gets the result of the DB for the sql comand
+            $result = $connection->query($sql);
 
-          //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            //when there is a problem with the sql comand like wrong spelled collmn the DB returns false
+            if($result==false){
 
-          //if DB returns false it error message is printed
-          if($result==false){
-
-            echo "error 01: [login.php]: database returns false: ".$sql;
-
-          }
-          else{
-
-            //runs throught the array
-            while ($datensatz = $result->fetch_assoc()) {
+              echo "error 01: [login.php]: database returns false: ".$sql;
 
             }
-          }
-        ?>
+            else{
+
+              //runs throught the array
+              while ($datensatz = $result->fetch_assoc()) {
+
+                //get information of the user
+                $uid = $datensatz['ToID'];
+                $looksAt = $datensatz['looksAt'];
+                $dateTime = $datensatz['dateTime'];
+                $IP = $datensatz['IP'];
+                $UID = $datensatz['UID'];
+
+                //prints the information in the table
+                echo "<tr><td>$uid</td><td>$looksAt</td><td>$dateTime</td><td>$IP</td><td>$UID</td></tr>";
+
+              }
+            }
+          ?>
+        </table>
       </div>
-
-
     </div>
   </body>
 </html>

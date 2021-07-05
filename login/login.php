@@ -174,7 +174,7 @@
                     $ip = $_SERVER['REMOTE_ADDR'];
 
                     //get datetime
-                    $date = date('Y-m-d h:i:s', time());
+                    $date = date('Y-m-d h:i:s', time()+ 60 * 60 * 24);
 
                     //creates token in database
                     $sql0 ="INSERT INTO token (looksAt,dateTime,IP) VALUES('home','$date','$ip');";
