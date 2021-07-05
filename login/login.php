@@ -167,19 +167,43 @@
                     //!if possible with out time limit!
                     setcookie('id',$datensatz['UID'],time()+ 60 * 60 * 24 * 30,'/',null);
 
+                    //set user id
                     $id = $datensatz['UID'];
 
-                    //creates token in database
-
                     //get user ip
-                    //$ip = $_SERVER['REMOTE_ADDR'];
-                    //sql0 is used for securety
-                    //$sql0 =
+                    $ip = $_SERVER['REMOTE_ADDR'];
 
-                    //looks which typ of user the person is (e.g.:admin,sutdent representative,teacher)
-                    checkRights($id,$connection);
+                    //get datetime
+                    $date = date('Y-m-d h:i:s', time());
+
+                    //creates token in database
+                    $sql0 ="INSERT INTO token (looksAt,dateTime,IP) VALUES('home','$date','$ip');";
+
+                    //sent command to database
+                    $connection->query($sql0);
+
+                    //get token id
+                    $sql01 ="SELECT ToID FROM token WHERE looksAt = 'home' and IP = '$ip'";
+
+                    //sent command to database
+                    $result01 = $connection->query($sql01);
+                    if($result01 != false){
+                      //if there is for than one token for this pc
+                      while($datensatz01 = $result01->fetch_assoc()){
+                        $toid = $datensatz01['ToID'];
+                      }
+                      //creates token in database
+                      $sql02 ="INSERT INTO online (ToID,UID) VALUES($toid,$id);";
+
+                      //sent command to database
+                      $connection->query($sql02);
+
+                      //looks which typ of user the person is (e.g.:admin,sutdent representative,teacher)
+                      checkRights($id,$connection);
+                    }
+                  }else{
+                    echo '<script>console.log("could not find created token");</script>';
                   }
-
                 }
                 echo "Password or Username is wrong but who could tell which of them ;)";
               }

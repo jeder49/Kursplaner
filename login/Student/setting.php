@@ -89,6 +89,12 @@
     }
 
     function logout (){
+      //get user id from cookie
+      $id = $_COOKIE['id'];
+
+      //get user ip so that permision is granted to the right pc
+      $ip = $_SERVER['REMOTE_ADDR'];
+
       //creates connection to database
       $connection = new mysqli('localhost', 'root', '', 'kursplaner');
 
