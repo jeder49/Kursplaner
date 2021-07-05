@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2021 at 12:13 PM
+-- Generation Time: Jul 05, 2021 at 02:38 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -229,13 +229,13 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UID`, `email`, `nickname`, `username`, `password`) VALUES
-(1, '', 'rich', 'user0', '-928147211'),
-(2, '', 'bob', 'user1', '-928147210'),
-(3, '', 'george', 'user2', '-928147209'),
-(4, '', 'asd', 'user3', '-928147208'),
-(5, '', 'Mrx', 'user4', '-928147207'),
-(6, '', 'Yes', 'user5', '-928147206'),
-(7, '', 'NO', 'user6', '-928147205');
+(1, 'irgendetwas3@gmx.de', 'rich', 'user0', '-928147211'),
+(2, 'irgendetwas3@gmx.de', 'bob', 'user1', '-928147210'),
+(3, 'irgendetwas3@gmx.de', 'george', 'user2', '-928147209'),
+(4, 'irgendetwas3@gmx.de', 'asd', 'user3', '-928147208'),
+(5, 'irgendetwas3@gmx.de', 'Mrx', 'user4', '-928147207'),
+(6, 'irgendetwas3@gmx.de', 'Yes', 'user5', '-928147206'),
+(7, 'irgendetwas3@gmx.de', 'NO', 'user6', '-928147205');
 
 --
 -- Indexes for dumped tables
