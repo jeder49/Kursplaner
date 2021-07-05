@@ -24,7 +24,7 @@
           while ($datensatz0 = $result0->fetch_assoc()) {
 
             //get datetime
-            $date = date('m/d/Y h:i:s a', time());
+            $date = date('Y-m-d h:i:s', time());
 
             //if the date of the token is in the past
             if($datensatz0['dateTime'] < $date){

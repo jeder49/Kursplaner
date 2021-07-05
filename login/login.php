@@ -263,7 +263,7 @@
               setcookie('typ','admin');
               //
               echo '<script>console.log("Your stuff here2")</script>';
-              header('Location: /Kursplaner/login/admin/startAdmin.html');
+              header('Location: /Kursplaner/login/admin/startAdmin.php');
             }
 
             //if the user is to find in the in any tabel
